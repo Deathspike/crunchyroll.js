@@ -1,0 +1,17 @@
+{
+  "name": "crunchyroll",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "big-integer": "^1.4.1",
+    "cheerio": "^0.18.0",
+    "request": "^2.51.0",
+    "xml2js": "^0.4.4"
+  }
+}
