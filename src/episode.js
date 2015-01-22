@@ -132,6 +132,6 @@ function _video(config, page, player, filePath, done) {
     player.video.host,
     player.video.file,
     page.swf,
-    filePath + '.mp4',
+    filePath + '.' + path.extname(player.video.file),
     done);
 }
