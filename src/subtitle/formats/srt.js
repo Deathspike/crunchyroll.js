@@ -2,7 +2,7 @@
 var xml2js = require('xml2js');
 
 /**
- * Converts an input buffer to a SRT subtitle.
+ * Converts an input buffer to a SubRip subtitle.
  * @param {Buffer|string} input
  * @param {function(Error, string=)} done
  */
@@ -62,7 +62,12 @@ function _suffix(value, length) {
  * @returns {string}
  */
 function _text(text) {
-  return text.replace(/{[^}]+}/g, '').replace(/\\n/ig, '\n');
+  return text
+    .replace(/{\\i1}(.+){\\i0}/g, '<i>$1</i>')
+    .replace(/{\\b1}(.+){\\b0}/g, '<b>$1</b>')
+    .replace(/{\\u1}(.+){\\u0}/g, '<u>$1</u>')
+    .replace(/{[^}]+}/g, '')
+    .replace(/\\n(\s+)?/ig, '\n');
 }
 
 /**

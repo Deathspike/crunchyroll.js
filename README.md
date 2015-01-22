@@ -30,7 +30,6 @@ premium subscription!**
 ### Pending Implementation
 
 * Detect and write the appropriate video extension (instead of hard-code mp4).
-* Improve SRT support for i, b and u.
 * Add ASS support.
 * Add muxing (MP4+ASS=MKV).
 * Add series API to download an entire series rather than per-episode.
