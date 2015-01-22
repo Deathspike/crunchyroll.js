@@ -1,22 +1,29 @@
 # CrunchyRoll.js
 
-CrunchyRoll.js is capable of downloading anime from the popular CrunchyRoll
-streaming site. Each episode is stored with the original video encoding
-(usually H.264, MP4) and the configured subtitle format (ASS or SRT). The two
-output files can optionally be muxed into a single MKV file.
+*CrunchyRoll.js* is capable of saving *anime* episodes from the popular *CrunchyRoll*
+streaming service. An episode is stored in the original video format (often
+H.264 in a MP4 container) and the configured subtitle format (ASS or SRT). The
+two output files are optionally muxed into a single MKV file.
 
 ## Motivation
 
-I **love** *CrunchyRoll*. They have been working hard to provide an amazing service to
-*anime* fans and provide the *absolute best* way to watch *anime* series in a legal
-way. As they offer a streaming service, they do not offer files to be downloaded
-and enjoyed while offline (or travelling). This is understandable from a
-business perspective, but extremely annoying for the end-user. I put this
-application together to enable the files to be stored and enjoyed while offline.
-Please do not download as much as you can and stop your premium subscription;
-without our financial support, they cannot give us such as great service!
-**Do not share downloaded files and delete them if you ever stop your
-premium subscription!**
+*CrunchyRoll* has been providing an amazing streaming service and offers the
+best way to enjoy *anime* in a *convenient* and *legal* way. As a streaming
+service, video files cannot be saved and watched offline. Understandable from a
+business perspective and considering the contract implications, but annoying for
+users. This application enables episodes to be saved for offline convenience.
+Please do not abuse this application; save episodes for **personal use** and
+**delete them** if you do not have an active premium account. Continue to support
+*CrunchyRoll*; without our financial backing their service cannot exist!
+
+## Legal Warning
+
+This application is not endorsed or affliated with *CrunchyRoll*. The usage of
+this application enables episodes to be saved for offline convenience which may
+be forbidden by law in your country. Usage of this application may also cause a
+violation of the agreed *Terms of Service* between you and the stream provider.
+A tool is not responsible for your actions; please make an informed decision
+prior to using this application.
 
 ## Status
 
@@ -31,8 +38,8 @@ premium subscription!**
 
 * Add ASS support.
 * Add muxing (MP4+ASS=MKV).
-* Add series API to download an entire series rather than per-episode.
-* Add batch-mode to queue a bunch of series and do incremental downloads.
+* Add series API to save an entire series rather than per-episode.
+* Add batch-mode to queue a bunch of series and do incremental saves.
 * Add authentication to the entire stack to support premium content.
 * Add CLI interface with all the options.
 * Enjoy beautiful anime series from disk when internet is down.
