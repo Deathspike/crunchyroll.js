@@ -63,11 +63,12 @@ function _suffix(value, length) {
  */
 function _text(text) {
   return text
-    .replace(/{\\i1}(.+){\\i0}/g, '<i>$1</i>')
-    .replace(/{\\b1}(.+){\\b0}/g, '<b>$1</b>')
-    .replace(/{\\u1}(.+){\\u0}/g, '<u>$1</u>')
+    .replace(/{\\i1}/g, '<i>').replace(/{\\i0}/g, '</i>')
+    .replace(/{\\b1}/g, '<b>').replace(/{\\b0}/g, '</b>')
+    .replace(/{\\u1}/g, '<u>').replace(/{\\u0}/g, '</u>')
     .replace(/{[^}]+}/g, '')
-    .replace(/\\n(\s+)?/ig, '\n');
+    .replace(/(\s+)?\\n(\s+)?/ig, '\n')
+    .trim();
 }
 
 /**
