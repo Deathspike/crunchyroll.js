@@ -11,7 +11,7 @@ var xml2js = require('xml2js');
  * Streams the episode video and subtitle to disk.
  * @param {Object} config
  * @param {string} address
- * @param {function(Error, boolean=)} done
+ * @param {function(Error)} done
  */
 module.exports = function (config, address, done) {
   _page(address, function(err, page) {
@@ -59,19 +59,19 @@ function _complete(message, begin, done) {
  * @param {Object} config
  * @param {Object} page
  * @param {Object} player
- * @param {function(Error, boolean=)} done
+ * @param {function(Error)} done
  */
 function _download(config, page, player, done) {
   var tag = config.tag || 'CrunchyRoll';
-  var episode = (page.episode < 10 ? '0' : '') + page.episode;
-  var fileName = page.series + ' - ' + episode + ' [' + tag + ']';
+  var fullEpisode = (page.episode < 10 ? '0' : '') + page.episode;
+  var fileName = page.series + ' - ' + fullEpisode + ' [' + tag + ']';
   var filePath = path.join(config.path || process.cwd(), fileName);
-  _subtitle(config, player, filePath, function(err, exists) {
-    if (err || exists) return done(err, err ? undefined : false);
+  _subtitle(config, player, filePath, function(err) {
+    if (err) return done(err);
     var begin = Date.now();
     console.log('Fetching ' + fileName);
-    _video(config, page, player, filePath, function(err, exists) {
-      if (err || exists) return done(err || undefined);
+    _video(config, page, player, filePath, function(err) {
+      if (err) return done(err);
       if (!config.merge) return _complete('Finished ' + fileName, begin, done);
       video.merge(config, player.video.file, filePath, function(err) {
         if (err) return done(err);
@@ -150,21 +150,18 @@ function _player(address, id, done) {
  * @param {Object} config
  * @param {Object} player
  * @param {string} filePath
- * @param {function(Error, boolean=)} done
+ * @param {function(Error)} done
  */
 function _subtitle(config, player, filePath, done) {
-  var format = subtitle.formats[config.format] ? config.format : 'srt';
-  fs.exists(filePath + (config.merge ? '.mkv' : format), function(exists) {
-    if (exists) return done(undefined, true);
-    var enc = player.subtitle;
-    subtitle.decode(enc.id, enc.iv, enc.data, function(err, data) {
+  var enc = player.subtitle;
+  subtitle.decode(enc.id, enc.iv, enc.data, function(err, data) {
+    if (err) return done(err);
+    var format = subtitle.formats[config.format] ? config.format : 'srt';
+    subtitle.formats[format](data, function(err, decodedSubtitle) {
       if (err) return done(err);
-      subtitle.formats[format](data, function(err, decodedSubtitle) {
+      fs.writeFile(filePath + '.' + format, decodedSubtitle, function(err) {
         if (err) return done(err);
-        fs.writeFile(filePath + '.' + format, decodedSubtitle, function(err) {
-          if (err) return done(err);
-          done(undefined, false);
-        });
+        done(undefined, false);
       });
     });
   });
@@ -177,20 +174,13 @@ function _subtitle(config, player, filePath, done) {
  * @param {Object} page
  * @param {Object} player
  * @param {string} filePath
- * @param {function(Error, boolean=)} done
+ * @param {function(Error)} done
  */
 function _video(config, page, player, filePath, done) {
-  var extension = path.extname(player.video.file);
-  fs.exists(filePath + (config.merge ? '.mkv' : extension), function(exists) {
-    if (exists) return done(undefined, true);
-    video.stream(
-      player.video.host,
-      player.video.file,
-      page.swf,
-      filePath + extension,
-      function(err) {
-        if (err) return done(err);
-        done(undefined, false);
-      });
-  });
+  video.stream(
+    player.video.host,
+    player.video.file,
+    page.swf,
+    filePath + path.extname(player.video.file),
+    done);
 }
