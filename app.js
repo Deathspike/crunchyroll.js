@@ -1,9 +1,10 @@
 'use strict';
 var config = {
-	format: 'ass', 			// defaults to srt
-	merge: true, 				// defaults to false
-	path: 'F:\\Anime', 	// defaults to process.cwd()
-	tag: undefined,  		// defaults to CrunchyRoll
+	format: 'ass', 			 // defaults to srt
+	merge: true, 				 // defaults to false
+	path: 'F:\\Anime', 	 // defaults to process.cwd(),
+	title: 'Fairy Tail', // defaults to series title.
+	tag: undefined,  		 // defaults to CrunchyRoll
 };
 
 /*var episode = require('./src/episode');
