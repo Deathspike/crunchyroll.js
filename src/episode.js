@@ -1,6 +1,7 @@
 'use strict';
 var cheerio = require('cheerio');
 var fs = require('fs');
+var mkdirp = require('mkdirp');
 var request = require('request');
 var path = require('path');
 var subtitle = require('./subtitle');
@@ -65,17 +66,20 @@ function _download(config, page, player, done) {
   var tag = config.tag || 'CrunchyRoll';
   var fullEpisode = (page.episode < 10 ? '0' : '') + page.episode;
   var fileName = page.series + ' - ' + fullEpisode + ' [' + tag + ']';
-  var filePath = path.join(config.path || process.cwd(), fileName);
-  _subtitle(config, player, filePath, function(err) {
+  var filePath = path.join(config.path || process.cwd(), page.series, fileName);
+  mkdirp(path.dirname(filePath), function(err) {
     if (err) return done(err);
-    var begin = Date.now();
-    console.log('Fetching ' + fileName);
-    _video(config, page, player, filePath, function(err) {
+    _subtitle(config, player, filePath, function(err) {
       if (err) return done(err);
-      if (!config.merge) return _complete('Finished ' + fileName, begin, done);
-      video.merge(config, player.video.file, filePath, function(err) {
+      var now = Date.now();
+      console.log('Fetching ' + fileName);
+      _video(config, page, player, filePath, function(err) {
         if (err) return done(err);
-        _complete('Finished ' + fileName, begin, done);
+        if (!config.merge) return _complete('Finished ' + fileName, now, done);
+        video.merge(config, player.video.file, filePath, function(err) {
+          if (err) return done(err);
+          _complete('Finished ' + fileName, now, done);
+        });
       });
     });
   });
