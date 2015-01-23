@@ -4,19 +4,19 @@ var path = require('path');
 var os = require('os');
 
 /**
- * Streams the video to disk using rtmpdump.
+ * Streams the video to disk.
  * @param {string} rtmpUrl
- * @param {string} inputPath
+ * @param {string} rtmpInputPath
  * @param {string} swfUrl
- * @param {string} outputPath
+ * @param {string} filePath
  * @param {function(Error)} done
  */
-module.exports = function(rtmpUrl, inputPath, swfUrl, outputPath, done) {
+module.exports = function(rtmpUrl, rtmpInputPath, swfUrl, filePath, done) {
   childProcess.exec(_command() + ' ' +
     '-r "' + rtmpUrl + '" ' +
-    '-y "' + inputPath + '" ' +
+    '-y "' + rtmpInputPath + '" ' +
     '-W "' + swfUrl + '" ' +
-    '-o "' + outputPath + '"', {
+    '-o "' + filePath + '"', {
     maxBuffer: Infinity
   }, done);
 };
