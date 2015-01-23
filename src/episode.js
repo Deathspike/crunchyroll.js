@@ -8,7 +8,7 @@ var video = require('./video');
 var xml2js = require('xml2js');
 
 /**
- * Streams the episode video and subtitle to disk.
+ * Streams the episode to disk.
  * @param {Object} config
  * @param {string} address
  * @param {function(Error)} done
@@ -39,7 +39,7 @@ function _affix(value, length) {
 }
 
 /**
- * Completes a download and writes the message with a time indication.
+ * Completes a download and writes the message with an elapsed time.
  * @param {string} message
  * @param {number} begin
  * @param {function(Error)} done
@@ -50,7 +50,7 @@ function _complete(message, begin, done) {
   var minutes = _affix(Math.floor(timeInMs / 1000 / 60) % 60, 2);
   var hours = _affix(Math.floor(timeInMs / 1000 / 60 / 60), 2);
   console.log(message + ' (' + hours + ':' + minutes + ':' + seconds + ')');
-  done(undefined);
+  done();
 }
 
 /**
@@ -159,10 +159,7 @@ function _subtitle(config, player, filePath, done) {
     var format = subtitle.formats[config.format] ? config.format : 'srt';
     subtitle.formats[format](data, function(err, decodedSubtitle) {
       if (err) return done(err);
-      fs.writeFile(filePath + '.' + format, decodedSubtitle, function(err) {
-        if (err) return done(err);
-        done(undefined, false);
-      });
+      fs.writeFile(filePath + '.' + format, decodedSubtitle, done);
     });
   });
 }
