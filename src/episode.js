@@ -64,9 +64,10 @@ function _complete(message, begin, done) {
  */
 function _download(config, page, player, done) {
   var tag = config.tag || 'CrunchyRoll';
+  var series = config.title || page.series;
   var fullEpisode = (page.episode < 10 ? '0' : '') + page.episode;
-  var fileName = page.series + ' - ' + fullEpisode + ' [' + tag + ']';
-  var filePath = path.join(config.path || process.cwd(), page.series, fileName);
+  var fileName = series + ' - ' + fullEpisode + ' [' + tag + ']';
+  var filePath = path.join(config.path || process.cwd(), series, fileName);
   mkdirp(path.dirname(filePath), function(err) {
     if (err) return done(err);
     _subtitle(config, player, filePath, function(err) {
