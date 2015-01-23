@@ -11,7 +11,7 @@ var xml2js = require('xml2js');
  * Streams the episode video and subtitle to disk.
  * @param {Object} config
  * @param {string} address
- * @param {function(Error)} done
+ * @param {function(Error, boolean=)} done
  */
 module.exports = function (config, address, done) {
   _page(address, function(err, page) {
@@ -59,7 +59,7 @@ function _complete(message, begin, done) {
  * @param {Object} config
  * @param {Object} page
  * @param {Object} player
- * @param {function(Error)} done
+ * @param {function(Error, boolean=)} done
  */
 function _download(config, page, player, done) {
   var tag = config.tag || 'CrunchyRoll';
@@ -67,7 +67,7 @@ function _download(config, page, player, done) {
   var fileName = page.series + ' - ' + episode + ' [' + tag + ']';
   var filePath = path.join(config.path || process.cwd(), fileName);
   _subtitle(config, player, filePath, function(err, exists) {
-    if (err || exists) return done(err || undefined);
+    if (err || exists) return done(err, err ? undefined : false);
     var begin = Date.now();
     console.log('Fetching ' + fileName);
     _video(config, page, player, filePath, function(err, exists) {
@@ -171,14 +171,14 @@ function _subtitle(config, player, filePath, done) {
 }
 
 /**
-* Streams the video to disk.
-* @private
-* @param {Object} config
-* @param {Object} page
-* @param {Object} player
-* @param {string} filePath
-* @param {function(Error, boolean=)} done
-*/
+ * Streams the video to disk.
+ * @private
+ * @param {Object} config
+ * @param {Object} page
+ * @param {Object} player
+ * @param {string} filePath
+ * @param {function(Error, boolean=)} done
+ */
 function _video(config, page, player, filePath, done) {
   var extension = path.extname(player.video.file);
   fs.exists(filePath + (config.merge ? '.mkv' : extension), function(exists) {
