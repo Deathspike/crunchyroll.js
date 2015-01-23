@@ -33,10 +33,10 @@ prior to using this application.
 * Subtitle converter for SRT subtitle output.
 * Video streaming.
 * Episode page scraping with subtitle saving and video streaming.
+* Add ASS support.
 
 ### Pending Implementation
 
-* Add ASS support.
 * Add muxing (MP4+ASS=MKV).
 * Add series API to save an entire series rather than per-episode.
 * Add batch-mode to queue a bunch of series and do incremental saves.
