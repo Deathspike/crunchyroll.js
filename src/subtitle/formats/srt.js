@@ -14,7 +14,7 @@ module.exports = function(input, done) {
   }, function(err, xml) {
     try {
       if (err) return done(err);
-      done(undefined, xml.events.event.map(_convert).join('\n'));
+      done(undefined, xml.events.event.map(_event).join('\n'));
     } catch(err) {
       done(err);
     }
@@ -23,11 +23,12 @@ module.exports = function(input, done) {
 
 /**
  * Converts an event.
+ * @private
  * @param {Object} event
  * @param {number} index
  * @returns {string}
  */
-function _convert(event, index) {
+function _event(event, index) {
   var attributes = event.$;
   return (index + 1) + '\n' +
     _time(attributes.start) + ' --> ' + _time(attributes.end) + '\n' +
@@ -36,6 +37,7 @@ function _convert(event, index) {
 
 /**
  * Prefixes a value.
+ * @private
  * @param {string} value
  * @param {number} length
  * @returns {string}
@@ -47,6 +49,7 @@ function _prefix(value, length) {
 
 /**
  * Suffixes a value.
+ * @private
  * @param {string} value
  * @param {number} length
  * @returns {string}
@@ -58,6 +61,7 @@ function _suffix(value, length) {
 
 /**
  * Formats a text value.
+ * @private
  * @param {string} text
  * @returns {string}
  */
@@ -73,6 +77,7 @@ function _text(text) {
 
 /**
  * Formats a time stamp.
+ * @private
  * @param {string} time
  * @returns {string}
  */
