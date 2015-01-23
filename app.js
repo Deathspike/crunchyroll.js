@@ -6,11 +6,20 @@ var config = {
 	tag: undefined,  		// defaults to CrunchyRoll
 };
 
-var episode = require('./src/episode');
+/*var episode = require('./src/episode');
 episode(
 	config,
 	'http://www.crunchyroll.com/fairy-tail/episode-1-the-dragon-king-652167',
 	function(err) {
 	if (err) return console.log(err);
 	console.log('All done!');
+});*/
+
+var series = require('./src/series');
+series(
+	config,
+	'http://www.crunchyroll.com/fairy-tail',
+	function(err) {
+		if (err) return console.log(err.stack || err);
+		console.log('All done!');
 });
