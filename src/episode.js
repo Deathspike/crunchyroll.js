@@ -25,6 +25,7 @@ module.exports = function (config, address, done) {
 
 /**
  * Downloads the subtitle and video.
+ * @private
  * @param {Object} config
  * @param {Object} page
  * @param {Object} player
@@ -85,23 +86,28 @@ function _player(address, id, done) {
       explicitRoot: false
     }, function(err, player) {
       if (err) return done(err);
-      done(undefined, {
-        subtitle: {
-          id: player['default:preload'].subtitle.$.id,
-          iv: player['default:preload'].subtitle.iv,
-          data: player['default:preload'].subtitle.data
-        },
-        video: {
-          file: player['default:preload'].stream_info.file,
-          host: player['default:preload'].stream_info.host
-        }
-      });
+      try {
+        done(undefined, {
+          subtitle: {
+            id: player['default:preload'].subtitle.$.id,
+            iv: player['default:preload'].subtitle.iv,
+            data: player['default:preload'].subtitle.data
+          },
+          video: {
+            file: player['default:preload'].stream_info.file,
+            host: player['default:preload'].stream_info.host
+          }
+        });
+      } catch(err) {
+        done(err);
+      }
     });
   });
 }
 
 /**
  * Saves the subtitles to disk.
+ * @private
  * @param {Object} config
  * @param {Object} player
  * @param {string} filePath
@@ -121,6 +127,7 @@ function _subtitle(config, player, filePath, done) {
 
 /**
 * Streams the video to disk.
+* @private
 * @param {Object} config
 * @param {Object} page
 * @param {Object} player
@@ -132,6 +139,6 @@ function _video(config, page, player, filePath, done) {
     player.video.host,
     player.video.file,
     page.swf,
-    filePath + '.' + path.extname(player.video.file),
+    filePath + path.extname(player.video.file),
     done);
 }
