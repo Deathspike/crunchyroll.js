@@ -18,7 +18,7 @@
   "quotmark"     : "single",
   "undef"        : true,
   "unused"       : true,
-  "singleGroups" : true,
+  "singleGroups" : false,
   "strict"       : true,
   "maxparams"    : 5,
   "maxdepth"     : 5,
