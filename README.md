@@ -34,10 +34,10 @@ prior to using this application.
 * Video streaming.
 * Episode page scraping with subtitle saving and video streaming.
 * Add ASS support.
+* Add muxing (MP4+ASS=MKV).
 
 ### Pending Implementation
 
-* Add muxing (MP4+ASS=MKV).
 * Add series API to save an entire series rather than per-episode.
 * Add batch-mode to queue a bunch of series and do incremental saves.
 * Add authentication to the entire stack to support premium content.

@@ -24,6 +24,36 @@ module.exports = function (config, address, done) {
 };
 
 /**
+ * Affixes zero-padding to the value.
+ * @private
+ * @param {(number|string)} value
+ * @param {number} length
+ * @returns {string}
+ */
+function _affix(value, length) {
+  if (typeof value !== 'string') value = String(value);
+  var suffix = value.indexOf('.') !== -1;
+  var add = length - (suffix ? value.indexOf('.') : value.length);
+  while ((add -= 1) >= 0) value = '0' + value;
+  return value;
+}
+
+/**
+ * Completes a download and writes the message with a time indication.
+ * @param {string} message
+ * @param {number} begin
+ * @param {function(Error)} done
+ */
+function _complete(message, begin, done) {
+  var timeInMs = Date.now() - begin;
+  var seconds = _affix(Math.floor(timeInMs / 1000) % 60, 2);
+  var minutes = _affix(Math.floor(timeInMs / 1000 / 60) % 60, 2);
+  var hours = _affix(Math.floor(timeInMs / 1000 / 60 / 60), 2);
+  console.log(message + ' (' + hours + ':' + minutes + ':' + seconds + ')');
+  done(undefined);
+}
+
+/**
  * Downloads the subtitle and video.
  * @private
  * @param {Object} config
@@ -36,9 +66,18 @@ function _download(config, page, player, done) {
   var episode = (page.episode < 10 ? '0' : '') + page.episode;
   var fileName = page.series + ' - ' + episode + ' [' + tag + ']';
   var filePath = path.join(config.path || process.cwd(), fileName);
-  _subtitle(config, player, filePath, function(err) {
-    if (err) return done(err);
-    _video(config, page, player, filePath, done);
+  _subtitle(config, player, filePath, function(err, exists) {
+    if (err || exists) return done(err || undefined);
+    var begin = Date.now();
+    console.log('Fetching ' + fileName);
+    _video(config, page, player, filePath, function(err, exists) {
+      if (err || exists) return done(err || undefined);
+      if (!config.merge) return _complete('Finished ' + fileName, begin, done);
+      video.merge(config, player.video.file, filePath, function(err) {
+        if (err) return done(err);
+        _complete('Finished ' + fileName, begin, done);
+      });
+    });
   });
 }
 
@@ -111,16 +150,22 @@ function _player(address, id, done) {
  * @param {Object} config
  * @param {Object} player
  * @param {string} filePath
- * @param {function(Error)} done
+ * @param {function(Error, boolean=)} done
  */
 function _subtitle(config, player, filePath, done) {
-  var contents = player.subtitle;
-  subtitle.decode(contents.id, contents.iv, contents.data, function(err, data) {
-    if (err) return done(err);
-    var format = subtitle.formats[config.format] ? config.format : 'srt';
-    subtitle.formats[format](data, function(err, decodedSubtitle) {
+  var format = subtitle.formats[config.format] ? config.format : 'srt';
+  fs.exists(filePath + (config.merge ? '.mkv' : format), function(exists) {
+    if (exists) return done(undefined, true);
+    var enc = player.subtitle;
+    subtitle.decode(enc.id, enc.iv, enc.data, function(err, data) {
       if (err) return done(err);
-      fs.writeFile(filePath + '.' + format, decodedSubtitle, done);
+      subtitle.formats[format](data, function(err, decodedSubtitle) {
+        if (err) return done(err);
+        fs.writeFile(filePath + '.' + format, decodedSubtitle, function(err) {
+          if (err) return done(err);
+          done(undefined, false);
+        });
+      });
     });
   });
 }
@@ -132,13 +177,20 @@ function _subtitle(config, player, filePath, done) {
 * @param {Object} page
 * @param {Object} player
 * @param {string} filePath
-* @param {function(Error)} done
+* @param {function(Error, boolean=)} done
 */
 function _video(config, page, player, filePath, done) {
-  video.stream(
-    player.video.host,
-    player.video.file,
-    page.swf,
-    filePath + path.extname(player.video.file),
-    done);
+  var extension = path.extname(player.video.file);
+  fs.exists(filePath + (config.merge ? '.mkv' : extension), function(exists) {
+    if (exists) return done(undefined, true);
+    video.stream(
+      player.video.host,
+      player.video.file,
+      page.swf,
+      filePath + extension,
+      function(err) {
+        if (err) return done(err);
+        done(undefined, false);
+      });
+  });
 }
