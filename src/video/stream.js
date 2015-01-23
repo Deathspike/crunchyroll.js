@@ -23,6 +23,7 @@ module.exports = function(rtmpUrl, rtmpInputPath, swfUrl, filePath, done) {
 
 /**
  * Determines the command for the operating system.
+ * @private
  * @returns {string}
  */
 function _command() {
