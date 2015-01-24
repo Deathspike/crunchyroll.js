@@ -8,9 +8,9 @@
   ],
   "name": "crunchyroll",
   "repository": "git://github.com/Deathspike/crunchyroll.js.git",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "bin": {
-    "mangarack": "./bin/crunchyroll"
+    "crunchyroll": "./bin/crunchyroll"
   },
   "dependencies": {
     "big-integer": "^1.4.1",
