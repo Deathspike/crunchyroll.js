@@ -67,6 +67,8 @@ function _parse(args) {
     // Disables
     .option('-c, --cache', 'Disables the cache.')
     .option('-m, --merge', 'Disables merging subtitles and videos.')
+    // Filters
+    .option('-e, --episode <i>', 'The episode filter.')
     // Settings
     .option('-f, --format <s>', 'The subtitle format. (Default: ass)')
     .option('-o, --output <s>', 'The output path.')

@@ -22,9 +22,7 @@ module.exports = function (config, address, done) {
       var i = 0;
       (function next() {
         if (i >= page.episodes.length) return done();
-        var episode = page.episodes[i];
-        var episodeAddress = url.resolve(address, episode.address);
-        _download(cache, config, episodeAddress, function(err) {
+        _download(cache, config, address, page.episodes[i], function(err) {
           if (err) return done(err);
           var newCache = JSON.stringify(cache, null, '  ');
           fs.writeFile(persistentPath, newCache, function(err) {
@@ -42,10 +40,16 @@ module.exports = function (config, address, done) {
  * Downloads the episode.
  * @param {Object.<string, string>} cache
  * @param {Object} config
- * @param {string} address
+ * @param {string} baseAddress
+ * @param {Object} data
  * @param {function(Error)} done
  */
-function _download(cache, config, address, done) {
+function _download(cache, config, baseAddress, data, done) {
+  if (typeof config.episode === 'number') {
+    if (config.episode > 0 && data.number < config.episode) return done();
+    if (config.episode < 0 && -config.episode < data.number) return done();
+  }
+  var address = url.resolve(baseAddress, data.address);
   if (cache[address]) return done();
   episode(config, address, function(err) {
     if (err) return done(err);
@@ -73,7 +77,7 @@ function _page(address, done) {
       var title = ($(el).children('.series-title').text() || '').trim();
       var match = /([0-9]+)$/.exec(title);
       if (!address || !match) return;
-      episodes.push({address: address, episode: parseInt(match[0], 10)});
+      episodes.push({address: address, number: parseInt(match[0], 10)});
     });
     done(undefined, {episodes: episodes.reverse(), series: title});
   });
