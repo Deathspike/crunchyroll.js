@@ -161,7 +161,7 @@ function _subtitle(config, player, filePath, done) {
   var enc = player.subtitle;
   subtitle.decode(enc.id, enc.iv, enc.data, function(err, data) {
     if (err) return done(err);
-    var format = subtitle.formats[config.format] ? config.format : 'srt';
+    var format = subtitle.formats[config.format] ? config.format : 'ass';
     subtitle.formats[format](data, function(err, decodedSubtitle) {
       if (err) return done(err);
       fs.writeFile(filePath + '.' + format, decodedSubtitle, done);
