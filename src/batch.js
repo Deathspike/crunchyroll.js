@@ -91,6 +91,9 @@ function _parse(args) {
     .option('-m, --merge', 'Disables merging subtitles and videos.')
     // Filters
     .option('-e, --episode <i>', 'The episode filter.')
+    // Authentication
+    .option('-p, --pass <s>', 'The password.')
+    .option('-u, --user <s>', 'The e-mail address or username.')
     // Settings
     .option('-f, --format <s>', 'The subtitle format. (Default: ass)')
     .option('-o, --output <s>', 'The output path.')

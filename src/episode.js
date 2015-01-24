@@ -2,7 +2,7 @@
 var cheerio = require('cheerio');
 var fs = require('fs');
 var mkdirp = require('mkdirp');
-var request = require('request');
+var request = require('./request');
 var path = require('path');
 var subtitle = require('./subtitle');
 var video = require('./video');
@@ -15,9 +15,9 @@ var xml2js = require('xml2js');
  * @param {function(Error)} done
  */
 module.exports = function (config, address, done) {
-  _page(address, function(err, page) {
+  _page(config, address, function(err, page) {
     if (err) return done(err);
-    _player(address, page.id, function(err, player) {
+    _player(config, address, page.id, function(err, player) {
       if (err) return done(err);
       _download(config, page, player, done);
     });
@@ -87,13 +87,14 @@ function _name(config, page, series, tag) {
 /**
  * Requests the page data and scrapes the id, episode, series and swf.
  * @private
+ * @param {Object} config
  * @param {string} address
  * @param {function(Error, Object=)} done
  */
-function _page(address, done) {
+function _page(config, address, done) {
   var id = parseInt((address.match(/[0-9]+$/) || [0])[0], 10);
   if (!id) return done(new Error('Invalid address.'));
-  request.get(address, function(err, res, body) {
+  request.get(config, address, function(err, res, body) {
     if (err) return done(err);
     var $ = cheerio.load(body);
     var swf = /^([^?]+)/.exec($('link[rel=video_src]').attr('href'));
@@ -124,14 +125,15 @@ function _prefix(value, length) {
 /**
  * Requests the player data and scrapes the subtitle and video data.
  * @private
+ * @param {Object} config
  * @param {string} address
  * @param {number} id
  * @param {function(Error, Object=)} done
  */
-function _player(address, id, done) {
+function _player(config, address, id, done) {
   var url = address.match(/^(https?:\/\/[^\/]+)/);
   if (!url) return done(new Error('Invalid address.'));
-  request.post({
+  request.post(config, {
     form: {current_page: address},
     url: url[1] + '/xml/?req=RpcApiVideoPlayer_GetStandardConfig&media_id=' + id
   }, function(err, res, xml) {

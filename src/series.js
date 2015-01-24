@@ -3,7 +3,7 @@ var cheerio = require('cheerio');
 var episode = require('./episode');
 var persistent = '.crpersistent';
 var fs = require('fs');
-var request = require('request');
+var request = require('./request');
 var path = require('path');
 var url = require('url');
 
@@ -13,11 +13,11 @@ var url = require('url');
  * @param {string} address
  * @param {function(Error)} done
  */
-module.exports = function (config, address, done) {
+module.exports = function(config, address, done) {
   var persistentPath = path.join(config.output || process.cwd(), persistent);
   fs.readFile(persistentPath, 'utf8', function(err, data) {
     var cache = config.cache ? {} : JSON.parse(data || '{}');
-    _page(address, function(err, page) {
+    _page(config, address, function(err, page) {
       if (err) return done(err);
       var i = 0;
       (function next() {
@@ -62,11 +62,12 @@ function _download(cache, config, baseAddress, data, done) {
 /**
  * Requests the page data and scrapes the episodes and series.
  * @private
+ * @param {Object} config
  * @param {string} address
  * @param {function(Error, Object=)} done
  */
-function _page(address, done) {
-  request.get(address, function(err, res, body) {
+function _page(config, address, done) {
+  request.get(config, address, function(err, res, body) {
     if (err) return done(err);
     var $ = cheerio.load(body);
     var title = $('.season-dropdown').text() || $('span[itemprop=name]').text();

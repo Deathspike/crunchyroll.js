@@ -40,11 +40,19 @@ prior to using this application.
 * Add batch-mode to queue a bunch of series.
 * Add CLI interface with all the options.
 * Support scheduled merging; if it fails now, the video is probably being watched.
+* Add authentication to the entire stack to support premium content.
 
 ### Pending Implementation
 
-* Add authentication to the entire stack to support premium content.
+* Binary runner for `npm`
+* Windows examples with a .bat for ease of use.
+* Documentation.
+* Publish to `npm` with a fixed package.json.
 * Enjoy beautiful anime series from disk when internet is down.
+
+## Configuration
+
+Set defaults in https://www.crunchyroll.com/acct/?action=video. We'll use that.
 
 ## Work In Progress
 
