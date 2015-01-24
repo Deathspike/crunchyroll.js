@@ -25,21 +25,6 @@ module.exports = function (config, address, done) {
 };
 
 /**
- * Affixes zero-padding to the value.
- * @private
- * @param {(number|string)} value
- * @param {number} length
- * @returns {string}
- */
-function _affix(value, length) {
-  if (typeof value !== 'string') value = String(value);
-  var suffix = value.indexOf('.') !== -1;
-  var add = length - (suffix ? value.indexOf('.') : value.length);
-  while ((add -= 1) >= 0) value = '0' + value;
-  return value;
-}
-
-/**
  * Completes a download and writes the message with an elapsed time.
  * @param {string} message
  * @param {number} begin
@@ -47,9 +32,9 @@ function _affix(value, length) {
  */
 function _complete(message, begin, done) {
   var timeInMs = Date.now() - begin;
-  var seconds = _affix(Math.floor(timeInMs / 1000) % 60, 2);
-  var minutes = _affix(Math.floor(timeInMs / 1000 / 60) % 60, 2);
-  var hours = _affix(Math.floor(timeInMs / 1000 / 60 / 60), 2);
+  var seconds = _prefix(Math.floor(timeInMs / 1000) % 60, 2);
+  var minutes = _prefix(Math.floor(timeInMs / 1000 / 60) % 60, 2);
+  var hours = _prefix(Math.floor(timeInMs / 1000 / 60 / 60), 2);
   console.log(message + ' (' + hours + ':' + minutes + ':' + seconds + ')');
   done();
 }
@@ -86,17 +71,17 @@ function _download(config, page, player, done) {
 }
 
 /**
-* Names the file based on the config, page, series and tag.
-* @param {Object} config
-* @param {Object} page
-* @param {string} series
-* @param {string} tag
-* @returns {string}
-*/
+ * Names the file based on the config, page, series and tag.
+ * @param {Object} config
+ * @param {Object} page
+ * @param {string} series
+ * @param {string} tag
+ * @returns {string}
+ */
 function _name(config, page, series, tag) {
   var v = config.volume ? (config.volume < 10 ? '0' : '') + config.volume : '';
   var e = (page.episode < 10 ? '0' : '') + page.episode;
-  return series + ' - ' + (v ? v + 'x' : '') + e + ' [' + tag + ']';
+  return series + ' ' + (v ? v + 'x' : '') + e + ' [' + tag + ']';
 }
 
 /**
@@ -121,6 +106,19 @@ function _page(address, done) {
       swf: swf[1]
     });
   });
+}
+
+/**
+ * Prefixes a value.
+ * @private
+ * @param {(number|string)} value
+ * @param {number} length
+ * @returns {string}
+ */
+function _prefix(value, length) {
+  if (typeof value !== 'string') value = String(value);
+  while (value.length < length) value = '0' + value;
+  return value;
 }
 
 /**

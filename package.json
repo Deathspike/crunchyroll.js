@@ -11,6 +11,7 @@
   "dependencies": {
     "big-integer": "^1.4.1",
     "cheerio": "^0.18.0",
+    "commander": "^2.6.0",
     "mkdirp": "^0.5.0",
     "request": "^2.51.0",
     "xml2js": "^0.4.4"
