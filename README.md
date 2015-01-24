@@ -39,10 +39,10 @@ prior to using this application.
 * Add support for incremental saves.
 * Add batch-mode to queue a bunch of series.
 * Add CLI interface with all the options.
+* Support scheduled merging; if it fails now, the video is probably being watched.
 
 ### Pending Implementation
 
-* Support scheduled merging; if it fails now, the video is probably being watched.
 * Add authentication to the entire stack to support premium content.
 * Enjoy beautiful anime series from disk when internet is down.
 
