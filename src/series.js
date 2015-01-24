@@ -45,9 +45,10 @@ module.exports = function (config, address, done) {
  * @param {function(Error)} done
  */
 function _download(cache, config, baseAddress, data, done) {
-  if (typeof config.episode === 'number') {
-    if (config.episode > 0 && data.number < config.episode) return done();
-    if (config.episode < 0 && -config.episode < data.number) return done();
+  if (typeof config.episode !== 'undefined') {
+    var filter = parseInt(config.episode, 10);
+    if (filter > 0 && data.number <= filter) return done();
+    if (filter < 0 && data.number >= Math.abs(filter)) return done();
   }
   var address = url.resolve(baseAddress, data.address);
   if (cache[address]) return done();
