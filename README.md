@@ -36,13 +36,14 @@ prior to using this application.
 * Add ASS support.
 * Add muxing (MP4+ASS=MKV).
 * Add series API to save an entire series rather than per-episode.
+* Add support for incremental saves.
+* Add batch-mode to queue a bunch of series.
+* Add CLI interface with all the options.
 
 ### Pending Implementation
 
-* Add batch-mode to queue a bunch of series.
-* Add support for incremental saves; currently just overwriting stuff, bad.
+* Support scheduled merging; if it fails now, the video is probably being watched.
 * Add authentication to the entire stack to support premium content.
-* Add CLI interface with all the options.
 * Enjoy beautiful anime series from disk when internet is down.
 
 ## Work In Progress
