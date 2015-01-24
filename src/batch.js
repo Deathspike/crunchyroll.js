@@ -27,6 +27,28 @@ module.exports = function(args, done) {
 };
 
 /**
+ * Splits the value into arguments.
+ * @param {string} value
+ * @returns {Array.<string>}
+ */
+function _split(value) {
+  var inQuote = false;
+  var pieces = [];
+  var previous = 0;
+  for (var i = 0; i < value.length; i += 1) {
+    if (value.charAt(i) === '"') {
+      inQuote = !inQuote;
+    }
+    if (!inQuote && value.charAt(i) === ' ') {
+      pieces.push(value.substring(previous, i).match(/^"?(.*)"?$/)[1]);
+      previous = i + 1;
+    }
+  }
+  pieces.push(value.substring(previous));
+  return pieces;
+}
+
+/**
  * Parses the configuration or reads the batch-mode file for tasks.
  * @private
  * @param {Object} config
@@ -45,7 +67,7 @@ function _tasks(config, batchPath, done) {
       if (err) return done(err);
       var map = [];
       data.split(/\r?\n/).forEach(function(line) {
-        var lineConfig = _parse(process.argv.concat(line.split(' ')));
+        var lineConfig = _parse(process.argv.concat(_split(line)));
         lineConfig.args.forEach(function(address) {
           if (!address) return;
           map.push({address: address, config: lineConfig});
