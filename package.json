@@ -1,13 +1,17 @@
 {
+  "author": "Roel van Uden",
+  "description": "CrunchyRoll.js is capable of downloading anime episodes from the popular CrunchyRoll streaming service.",
+  "keywords": [
+    "anime",
+    "download",
+    "crunchyroll"
+  ],
   "name": "crunchyroll",
+  "repository": "git://github.com/Deathspike/crunchyroll.js.git",
   "version": "1.0.0",
-  "description": "",
-  "main": "app.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "bin": {
+    "mangarack": "./bin/crunchyroll"
   },
-  "author": "",
-  "license": "ISC",
   "dependencies": {
     "big-integer": "^1.4.1",
     "cheerio": "^0.18.0",
@@ -15,5 +19,8 @@
     "mkdirp": "^0.5.0",
     "request": "^2.51.0",
     "xml2js": "^0.4.4"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
   }
 }
