@@ -40,7 +40,7 @@ function _split(value) {
       inQuote = !inQuote;
     }
     if (!inQuote && value.charAt(i) === ' ') {
-      pieces.push(value.substring(previous, i).match(/^"?(.*)"?$/)[1]);
+      pieces.push(value.substring(previous, i).match(/^"?(.+?)"?$/)[1]);
       previous = i + 1;
     }
   }
