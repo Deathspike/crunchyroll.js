@@ -76,7 +76,7 @@ function _download(config, page, player, done) {
       console.log('Fetching ' + fileName);
       _video(config, page, player, filePath, function(err) {
         if (err) return done(err);
-        if (!config.merge) return _complete('Finished ' + fileName, now, done);
+        if (config.merge) return _complete('Finished ' + fileName, now, done);
         video.merge(config, player.video.file, filePath, function(err) {
           if (err) return done(err);
           _complete('Finished ' + fileName, now, done);
