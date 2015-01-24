@@ -14,7 +14,7 @@ var url = require('url');
  * @param {function(Error)} done
  */
 module.exports = function (config, address, done) {
-  var persistentPath = path.join(config.path || process.cwd(), persistent);
+  var persistentPath = path.join(config.output || process.cwd(), persistent);
   fs.readFile(persistentPath, 'utf8', function(err, data) {
     var cache = config.cache ? {} : JSON.parse(data || '{}');
     _page(address, function(err, page) {

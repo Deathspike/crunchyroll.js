@@ -64,10 +64,9 @@ function _complete(message, begin, done) {
  */
 function _download(config, page, player, done) {
   var tag = config.tag || 'CrunchyRoll';
-  var series = config.title || page.series;
-  var fullEpisode = (page.episode < 10 ? '0' : '') + page.episode;
-  var fileName = series + ' - ' + fullEpisode + ' [' + tag + ']';
-  var filePath = path.join(config.path || process.cwd(), series, fileName);
+  var series = config.series || page.series;
+  var fileName = _name(config, page, series, tag);
+  var filePath = path.join(config.output || process.cwd(), series, fileName);
   mkdirp(path.dirname(filePath), function(err) {
     if (err) return done(err);
     _subtitle(config, player, filePath, function(err) {
@@ -84,6 +83,20 @@ function _download(config, page, player, done) {
       });
     });
   });
+}
+
+/**
+* Names the file based on the config, page, series and tag.
+* @param {Object} config
+* @param {Object} page
+* @param {string} series
+* @param {string} tag
+* @returns {string}
+*/
+function _name(config, page, series, tag) {
+  var v = config.volume ? (config.volume < 10 ? '0' : '') + config.volume : '';
+  var e = (page.episode < 10 ? '0' : '') + page.episode;
+  return series + ' - ' + (v ? v + 'x' : '') + e + ' [' + tag + ']';
 }
 
 /**
