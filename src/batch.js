@@ -88,19 +88,19 @@ function _tasks(config, batchPath, done) {
  */
 function _parse(args) {
   return new Command().version(require('../package').version)
+    // Authentication
+    .option('-p, --pass <s>', 'The password.')
+    .option('-u, --user <s>', 'The e-mail address or username.')
     // Disables
     .option('-c, --cache', 'Disables the cache.')
     .option('-m, --merge', 'Disables merging subtitles and videos.')
     // Filters
     .option('-e, --episode <i>', 'The episode filter.')
-    // Authentication
-    .option('-p, --pass <s>', 'The password.')
-    .option('-u, --user <s>', 'The e-mail address or username.')
+    .option('-v, --volume <i>', 'The volume filter.')
     // Settings
     .option('-f, --format <s>', 'The subtitle format. (Default: ass)')
     .option('-o, --output <s>', 'The output path.')
     .option('-s, --series <s>', 'The series override.')
     .option('-t, --tag <s>', 'The subgroup. (Default: CrunchyRoll)')
-    .option('-v, --volume <i>', 'The volume.')
     .parse(args);
 }
