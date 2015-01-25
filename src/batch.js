@@ -67,6 +67,7 @@ function _tasks(config, batchPath, done) {
       if (err) return done(err);
       var map = [];
       data.split(/\r?\n/).forEach(function(line) {
+        if (/^(\/\/|#)/.test(line)) return;
         var lineConfig = _parse(process.argv.concat(_split(line)));
         lineConfig.args.forEach(function(address) {
           if (!address) return;
