@@ -28,6 +28,7 @@ module.exports = function(args, done) {
 
 /**
  * Splits the value into arguments.
+ * @private
  * @param {string} value
  * @returns {Array.<string>}
  */

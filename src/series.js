@@ -38,6 +38,7 @@ module.exports = function(config, address, done) {
 
 /**
  * Downloads the episode.
+ * @private
  * @param {Object.<string, string>} cache
  * @param {Object} config
  * @param {string} baseAddress

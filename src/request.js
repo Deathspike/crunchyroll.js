@@ -17,6 +17,7 @@ module.exports.get = function(config, options, done) {
 
 /**
 * Performs a POST request for the resource.
+* @private
 * @param {Object} config
 * @param {(string|Object)} options
 * @param {function(Error, Object, string)} done
@@ -30,6 +31,7 @@ module.exports.post = function(config, options, done) {
 
 /**
  * Authenticates using the configured pass and user.
+ * @private
  * @param {Object} config
  * @param {function(Error)} done
  */
@@ -53,6 +55,7 @@ function _authenticate(config, done) {
 
 /**
  * Modifies the options to use the authenticated cookie jar.
+ * @private
  * @param {(string|Object)} options
  * @returns {Object}
  */

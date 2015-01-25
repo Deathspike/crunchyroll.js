@@ -26,6 +26,7 @@ module.exports = function (config, address, done) {
 
 /**
  * Completes a download and writes the message with an elapsed time.
+ * @private
  * @param {string} message
  * @param {number} begin
  * @param {function(Error)} done
@@ -72,6 +73,7 @@ function _download(config, page, player, done) {
 
 /**
  * Names the file based on the config, page, series and tag.
+ * @private
  * @param {Object} config
  * @param {Object} page
  * @param {string} series
