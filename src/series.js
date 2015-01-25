@@ -15,8 +15,8 @@ var url = require('url');
  */
 module.exports = function(config, address, done) {
   var persistentPath = path.join(config.output || process.cwd(), persistent);
-  fs.readFile(persistentPath, 'utf8', function(err, data) {
-    var cache = config.cache ? {} : JSON.parse(data || '{}');
+  fs.readFile(persistentPath, 'utf8', function(err, contents) {
+    var cache = config.cache ? {} : JSON.parse(contents || '{}');
     _page(config, address, function(err, page) {
       if (err) return done(err);
       var i = 0;
@@ -42,16 +42,12 @@ module.exports = function(config, address, done) {
  * @param {Object.<string, string>} cache
  * @param {Object} config
  * @param {string} baseAddress
- * @param {Object} data
+ * @param {Object} item
  * @param {function(Error)} done
  */
-function _download(cache, config, baseAddress, data, done) {
-  if (typeof config.episode !== 'undefined') {
-    var filter = parseInt(config.episode, 10);
-    if (filter > 0 && data.number <= filter) return done();
-    if (filter < 0 && data.number >= Math.abs(filter)) return done();
-  }
-  var address = url.resolve(baseAddress, data.address);
+function _download(cache, config, baseAddress, item, done) {
+  if (!_filter(config, item)) return done();
+  var address = url.resolve(baseAddress, item.address);
   if (cache[address]) return done();
   episode(config, address, function(err) {
     if (err) return done(err);
@@ -61,7 +57,26 @@ function _download(cache, config, baseAddress, data, done) {
 }
 
 /**
- * Requests the page data and scrapes the episodes and series.
+* Filters the item based on the configuration.
+* @param {Object} config
+* @param {Object} item
+* @returns {boolean}
+*/
+function _filter(config, item) {
+  // Filter on chapter.
+  var episodeFilter = parseInt(config.episode, 10);
+  if (episodeFilter > 0 && item.episode <= episodeFilter) return false;
+  if (episodeFilter < 0 && item.episode >= -episodeFilter) return false;
+
+  // Filter on volume.
+  var volumeFilter = parseInt(config.volume, 10);
+  if (volumeFilter > 0 && item.volume <= volumeFilter) return false;
+  if (volumeFilter < 0 && item.volume >= -volumeFilter) return false;
+  return true;
+}
+
+/**
+ * Requests the page and scrapes the episodes and series.
  * @private
  * @param {Object} config
  * @param {string} address
@@ -77,10 +92,14 @@ function _page(config, address, done) {
     $('.episode').each(function(i, el) {
       if ($(el).children('img[src*=coming_soon]').length) return;
       var address = $(el).attr('href');
-      var title = ($(el).children('.series-title').text() || '').trim();
-      var match = /([0-9]+)$/.exec(title);
-      if (!address || !match) return;
-      episodes.push({address: address, number: parseInt(match[0], 10)});
+      var episode = /([0-9]+)\s*$/.exec($(el).children('.series-title').text());
+      var volume = /([0-9]+)\s*$/.exec($(el).closest('ul').prev('a').text());
+      if (!address || !episode) return;
+      episodes.push({
+        address: address,
+        episode: parseInt(episode[0], 10),
+        volume: volume ? parseInt(volume[0], 10) : 1
+      });
     });
     done(undefined, {episodes: episodes.reverse(), series: title});
   });

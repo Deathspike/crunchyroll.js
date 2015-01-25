@@ -49,9 +49,8 @@ function _complete(message, begin, done) {
  * @param {function(Error)} done
  */
 function _download(config, page, player, done) {
-  var tag = config.tag || 'CrunchyRoll';
   var series = config.series || page.series;
-  var fileName = _name(config, page, series, tag);
+  var fileName = _name(config, page, series);
   var filePath = path.join(config.output || process.cwd(), series, fileName);
   mkdirp(path.dirname(filePath), function(err) {
     if (err) return done(err);
@@ -77,13 +76,13 @@ function _download(config, page, player, done) {
  * @param {Object} config
  * @param {Object} page
  * @param {string} series
- * @param {string} tag
  * @returns {string}
  */
-function _name(config, page, series, tag) {
-  var v = config.volume ? (config.volume < 10 ? '0' : '') + config.volume : '';
-  var e = (page.episode < 10 ? '0' : '') + page.episode;
-  return series + ' ' + (v ? v + 'x' : '') + e + ' [' + tag + ']';
+function _name(config, page, series) {
+  var episode = (page.episode < 10 ? '0' : '') + page.episode;
+  var volume = (page.volume < 10 ? '0' : '') + page.volume;
+  var tag = config.tag || 'CrunchyRoll';
+  return series + ' ' + volume + 'x' + episode + ' [' + tag + ']';
 }
 
 /**
@@ -100,13 +99,15 @@ function _page(config, address, done) {
     if (err) return done(err);
     var $ = cheerio.load(body);
     var swf = /^([^?]+)/.exec($('link[rel=video_src]').attr('href'));
-    var title = /Watch ([\w\W]+) Episode ([0-9]+)/.exec($('title').text());
-    if (!swf || !title) return done(new Error('Invalid page.'));
+    var regexp = /Watch\s+(.+?)(?:\s+Season\s+([0-9]+))?\s+Episode\s+([0-9]+)/;
+    var data = regexp.exec($('title').text());
+    if (!swf || !data) return done(new Error('Invalid page.'));
     done(undefined, {
       id: id,
-      episode: parseInt(title[2], 10),
-      series: title[1],
-      swf: swf[1]
+      episode: parseInt(data[3], 10),
+      series: data[1],
+      swf: swf[1],
+      volume: parseInt(data[2], 10) || 1
     });
   });
 }
