@@ -71,7 +71,7 @@ function _page(config, address, done) {
   request.get(config, address, function(err, res, body) {
     if (err) return done(err);
     var $ = cheerio.load(body);
-    var title = $('.season-dropdown').text() || $('span[itemprop=name]').text();
+    var title = $('span[itemprop=name]').text();
     if (!title) return done(new Error('Invalid page.'));
     var episodes = [];
     $('.episode').each(function(i, el) {
