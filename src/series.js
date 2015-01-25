@@ -91,9 +91,10 @@ function _page(config, address, done) {
     var episodes = [];
     $('.episode').each(function(i, el) {
       if ($(el).children('img[src*=coming_soon]').length) return;
-      var address = $(el).attr('href');
-      var episode = /([0-9]+)\s*$/.exec($(el).children('.series-title').text());
       var volume = /([0-9]+)\s*$/.exec($(el).closest('ul').prev('a').text());
+      var regexp = /Episode\s+([0-9]+)\s*$/i;
+      var episode = regexp.exec($(el).children('.series-title').text());
+      var address = $(el).attr('href');
       if (!address || !episode) return;
       episodes.push({
         address: address,
