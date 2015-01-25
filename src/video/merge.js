@@ -41,7 +41,8 @@ function _command() {
 }
 
 /**
- * Unlinks the video and subtitle
+ * Unlinks the video and subtitle.
+ * @private
  * @param {string} videoPath
  * @param {string} subtitlePath
  * @param {function(Error)} done
@@ -55,6 +56,7 @@ function _unlink(videoPath, subtitlePath, done) {
 
 /**
  * Attempts to unlink the video and subtitle with a timeout between each try.
+ * @private
  * @param {string} videoPath
  * @param {string} subtitlePath
  * @param {function(Error)} done
