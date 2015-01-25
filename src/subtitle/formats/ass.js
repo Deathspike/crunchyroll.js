@@ -31,9 +31,9 @@ module.exports = function(input, done) {
 function _event(events) {
   var format = 'Layer,Start,End,Style,Name,MarginL,MarginR,MarginV,Effect,Text';
   var items = [].concat(events.event).map(function(style) {
-      return _values(style.$, 'Dialogue: 0,{start},{end},{style},{name},' +
+    return _values(style.$, 'Dialogue: 0,{start},{end},{style},{name},' +
       '{margin_l},{margin_r},{margin_v},{effect},{text}');
-    });
+  });
   return '[Events]\n' +
     'Format: ' + format + '\n' +
     items.join('\n') + '\n';
