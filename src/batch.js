@@ -45,7 +45,7 @@ function _split(value) {
       previous = i + 1;
     }
   }
-  pieces.push(value.substring(previous));
+  pieces.push(value.substring(previous, i).match(/^"?(.+?)"?$/)[1]);
   return pieces;
 }
 
