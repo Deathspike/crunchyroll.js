@@ -179,7 +179,7 @@ function _subtitle(config, player, filePath, done) {
     var format = subtitle.formats[config.format] ? config.format : 'ass';
     subtitle.formats[format](data, function(err, decodedSubtitle) {
       if (err) return done(err);
-      fs.writeFile(filePath + '.' + format, decodedSubtitle, done);
+      fs.writeFile(filePath + '.' + format, '\ufeff' + decodedSubtitle, done);
     });
   });
 }
