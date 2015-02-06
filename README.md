@@ -56,6 +56,14 @@ decision prior to using this application.
 
 Set defaults in https://www.crunchyroll.com/acct/?action=video. We'll use that.
 
+## Developers
+
+* Visual Studio 2013 Update 4 (Core)
+* NodeJS Tools (Debugging)
+* TypeScript 1.4 (Language)
+* ReSharper 9.0+ (Hints/Formatting)
+* Web Essentials (TSLint)
+
 ## Work In Progress
 
 Open an issue or e-mail me directly. I'd be happy to answer your questions.
