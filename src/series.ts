@@ -1,31 +1,30 @@
 'use strict';
-var cheerio = require('cheerio');
-var episode = require('./episode');
+export = main;
+import cheerio = require('cheerio');
+import episode = require('./episode');
+import fs = require('fs');
+import request = require('./request');
+import path = require('path');
+import typings = require('./typings');
+import url = require('url');
 var persistent = '.crpersistent';
-var fs = require('fs');
-var request = require('./request');
-var path = require('path');
-var url = require('url');
 
 /**
  * Streams the series to disk.
- * @param {Object} config
- * @param {string} address
- * @param {function(Error)} done
  */
-module.exports = function(config, address, done) {
+function main(config: typings.IConfig, address: string, done: (err: Error) => void) {
   var persistentPath = path.join(config.output || process.cwd(), persistent);
-  fs.readFile(persistentPath, 'utf8', function(err, contents) {
+  fs.readFile(persistentPath, 'utf8', (err, contents) => {
     var cache = config.cache ? {} : JSON.parse(contents || '{}');
-    _page(config, address, function(err, page) {
+    page(config, address, (err, page) => {
       if (err) return done(err);
       var i = 0;
       (function next() {
-        if (i >= page.episodes.length) return done();
-        _download(cache, config, address, page.episodes[i], function(err) {
+        if (i >= page.episodes.length) return done(null);
+        download(cache, config, address, page.episodes[i], err => {
           if (err) return done(err);
           var newCache = JSON.stringify(cache, null, '  ');
-          fs.writeFile(persistentPath, newCache, function(err) {
+          fs.writeFile(persistentPath, newCache, err => {
             if (err) return done(err);
             i += 1;
             next();
@@ -34,42 +33,33 @@ module.exports = function(config, address, done) {
       })();
     });
   });
-};
+}
 
 /**
  * Downloads the episode.
- * @private
- * @param {Object.<string, string>} cache
- * @param {Object} config
- * @param {string} baseAddress
- * @param {Object} item
- * @param {function(Error)} done
  */
-function _download(cache, config, baseAddress, item, done) {
-  if (!_filter(config, item)) return done();
+function download(cache: {[address: string]: number}, config: typings.IConfig, baseAddress: string, item: typings.ISeriesEpisode, done: (err: Error) => void) {
+  if (!filter(config, item)) return done(null);
   var address = url.resolve(baseAddress, item.address);
-  if (cache[address]) return done();
-  episode(config, address, function(err) {
+  if (cache[address]) return done(null);
+  episode(config, address, err => {
     if (err) return done(err);
     cache[address] = Date.now();
-    done();
+    done(null);
   });
 }
 
 /**
-* Filters the item based on the configuration.
-* @param {Object} config
-* @param {Object} item
-* @returns {boolean}
-*/
-function _filter(config, item) {
+ * Filters the item based on the configuration.
+ */
+function filter(config: typings.IConfig, item: typings.ISeriesEpisode) {
   // Filter on chapter.
-  var episodeFilter = parseInt(config.episode, 10);
+  var episodeFilter = config.episode;
   if (episodeFilter > 0 && item.episode <= episodeFilter) return false;
   if (episodeFilter < 0 && item.episode >= -episodeFilter) return false;
 
   // Filter on volume.
-  var volumeFilter = parseInt(config.volume, 10);
+  var volumeFilter = config.volume;
   if (volumeFilter > 0 && item.volume <= volumeFilter) return false;
   if (volumeFilter < 0 && item.volume >= -volumeFilter) return false;
   return true;
@@ -77,19 +67,15 @@ function _filter(config, item) {
 
 /**
  * Requests the page and scrapes the episodes and series.
- * @private
- * @param {Object} config
- * @param {string} address
- * @param {function(Error, Object=)} done
  */
-function _page(config, address, done) {
-  request.get(config, address, function(err, res, body) {
+function page(config: typings.IConfig, address: string, done: (err: Error, result?: typings.ISeries) => void) {
+  request.get(config, address, (err, result) => {
     if (err) return done(err);
-    var $ = cheerio.load(body);
+    var $ = cheerio.load(result);
     var title = $('span[itemprop=name]').text();
     if (!title) return done(new Error('Invalid page.'));
-    var episodes = [];
-    $('.episode').each(function(i, el) {
+    var episodes: typings.ISeriesEpisode[] = [];
+    $('.episode').each((i, el) => {
       if ($(el).children('img[src*=coming_soon]').length) return;
       var volume = /([0-9]+)\s*$/.exec($(el).closest('ul').prev('a').text());
       var regexp = /Episode\s+([0-9]+)\s*$/i;
@@ -102,6 +88,6 @@ function _page(config, address, done) {
         volume: volume ? parseInt(volume[0], 10) : 1
       });
     });
-    done(undefined, {episodes: episodes.reverse(), series: title});
+    done(null, {episodes: episodes.reverse(), series: title});
   });
 }

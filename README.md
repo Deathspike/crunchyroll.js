@@ -45,6 +45,7 @@ decision prior to using this application.
 * Binary runner for `npm`
 * Windows examples with a .bat for ease of use.
 * Publish to `npm` with a fixed package.json.
+* Conversion to beautiful TypeScript 1.4 code.
 
 ### Pending Implementation
 
