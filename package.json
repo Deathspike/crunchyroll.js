@@ -20,13 +20,13 @@
     "request": "^2.53.0",
     "xml2js": "^0.4.4"
   },
-  "scripts": {
-    "prepublish": "npm run tsd && npm run tsc",
-    "tsc": "./node_modules/.bin/tsc --declaration --module CommonJS --noImplicitAny --outDir dist typings/tsd.d.ts src/cli.ts",
-    "tsd": "./node_modules/.bin/tsd reinstall --overwrite --save"
-  },
   "devDependencies": {
     "tsd": "^0.5.7",
+    "tslint": "^2.1.0",
     "typescript": "^1.4.1"
+  },
+  "scripts": {
+    "prepublish": "npm run tsd && node ts",
+    "tsd": "./node_modules/.bin/tsd reinstall --overwrite"
   }
 }
