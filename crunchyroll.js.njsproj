@@ -2,20 +2,20 @@
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-	<EnableTypeScript>True</EnableTypeScript>
+    <EnableTypeScript>True</EnableTypeScript>
     <OutputPath>.</OutputPath>
-	<ProjectGuid>{c5cff68a-d733-4347-83e7-6e5fe58eb0e3}</ProjectGuid>
-	<ProjectHome />
-	<ProjectTypeGuids>{3AF33F2E-1136-4D97-BBB7-1795711AC8B8};{349c5851-65df-11da-9384-00065b846f21};{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}</ProjectTypeGuids>
+    <ProjectGuid>{c5cff68a-d733-4347-83e7-6e5fe58eb0e3}</ProjectGuid>
+    <ProjectHome />
+    <ProjectTypeGuids>{3AF33F2E-1136-4D97-BBB7-1795711AC8B8};{349c5851-65df-11da-9384-00065b846f21};{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}</ProjectTypeGuids>
     <ProjectView>ShowAllFiles</ProjectView>
-	<SchemaVersion>2.0</SchemaVersion>
+    <SchemaVersion>2.0</SchemaVersion>
     <StartupFile>cli.ts</StartupFile>
-	<TypeScriptModuleKind>CommonJS</TypeScriptModuleKind>
-	<TypeScriptNoImplicitAny>True</TypeScriptNoImplicitAny>
-	<TypeScriptOutDir>dist</TypeScriptOutDir>
+    <TypeScriptModuleKind>CommonJS</TypeScriptModuleKind>
+    <TypeScriptNoImplicitAny>True</TypeScriptNoImplicitAny>
+    <TypeScriptOutDir>dist</TypeScriptOutDir>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">11.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
-	<WorkingDirectory>.</WorkingDirectory>
+    <WorkingDirectory>.</WorkingDirectory>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
     <TypeScriptSourceMap>True</TypeScriptSourceMap>
@@ -71,29 +71,29 @@
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
           <AutoAssignPort>True</AutoAssignPort>
-		  <CustomServerUrl>http://localhost:1337</CustomServerUrl>
-		  <DevelopmentServerPort>0</DevelopmentServerPort>
+          <CustomServerUrl>http://localhost:1337</CustomServerUrl>
+          <DevelopmentServerPort>0</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-		  <IISUrl>http://localhost:48022/</IISUrl>
-		  <NTLMAuthentication>False</NTLMAuthentication>
-		  <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
-		  <UseCustomServer>True</UseCustomServer>
-		  <UseIIS>False</UseIIS>
+          <IISUrl>http://localhost:48022/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+          <UseCustomServer>True</UseCustomServer>
+          <UseIIS>False</UseIIS>
         </WebProjectProperties>
       </FlavorProperties>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}" User="">
         <WebProjectProperties>
-		  <AlwaysStartWebServerOnDebug>False</AlwaysStartWebServerOnDebug>
+          <AlwaysStartWebServerOnDebug>False</AlwaysStartWebServerOnDebug>
           <AspNetDebugging>True</AspNetDebugging>
-		  <EnableENC>False</EnableENC>
-		  <ExternalProgram />
-		  <NativeDebugging>False</NativeDebugging>
-		  <SilverlightDebugging>False</SilverlightDebugging>
-		  <SQLDebugging>False</SQLDebugging>
-		  <StartAction>CurrentPage</StartAction>
-		  <StartCmdLineArguments />
-		  <StartExternalURL />
-		  <StartPageUrl />
+          <EnableENC>False</EnableENC>
+          <ExternalProgram />
+          <NativeDebugging>False</NativeDebugging>
+          <SilverlightDebugging>False</SilverlightDebugging>
+          <SQLDebugging>False</SQLDebugging>
+          <StartAction>CurrentPage</StartAction>
+          <StartCmdLineArguments />
+          <StartExternalURL />
+          <StartPageUrl />
           <StartWorkingDirectory />
         </WebProjectProperties>
       </FlavorProperties>
