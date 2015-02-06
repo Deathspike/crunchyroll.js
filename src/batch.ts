@@ -1,45 +1,41 @@
 'use strict';
-var Command = require('commander').Command;
-var fs = require('fs');
-var path = require('path');
-var series = require('./series');
+export = main;
+import commander = require('commander');
+import fs = require('fs');
+import path = require('path');
+import series = require('./series');
+import typings = require('./typings');
 
 /**
  * Streams the batch of series to disk.
- * @param {Array.<string>} args
- * @param {function(Error)} done
  */
-module.exports = function(args, done) {
-  var config = _parse(args);
+function main(args: string[], done: (err?: Error) => void) {
+  var config = parse(args);
   var batchPath = path.join(config.output || process.cwd(), 'CrunchyRoll.txt');
-  _tasks(config, batchPath, function(err, tasks) {
+  tasks(config, batchPath, (err, tasks) => {
     if (err) return done(err);
     var i = 0;
     (function next() {
       if (i >= tasks.length) return done();
-      series(tasks[i].config, tasks[i].address, function(err) {
+      series(tasks[i].config, tasks[i].address, err => {
         if (err) return done(err);
         i += 1;
         next();
       });
     })();
   });
-};
+}
 
 /**
  * Splits the value into arguments.
- * @private
- * @param {string} value
- * @returns {Array.<string>}
  */
-function _split(value) {
+function split(value: string): string[] {
   var inQuote = false;
-  var pieces = [];
+  var i: number;
+  var pieces: string[] = [];
   var previous = 0;
-  for (var i = 0; i < value.length; i += 1) {
-    if (value.charAt(i) === '"') {
-      inQuote = !inQuote;
-    }
+  for (i = 0; i < value.length; i += 1) {
+    if (value.charAt(i) === '"') inQuote = !inQuote;
     if (!inQuote && value.charAt(i) === ' ') {
       pieces.push(value.substring(previous, i).match(/^"?(.+?)"?$/)[1]);
       previous = i + 1;
@@ -51,43 +47,36 @@ function _split(value) {
 
 /**
  * Parses the configuration or reads the batch-mode file for tasks.
- * @private
- * @param {Object} config
- * @param {string} batchPath
- * @param {function(Error, Object=} done
  */
-function _tasks(config, batchPath, done) {
+function tasks(config: typings.IConfigLine, batchPath: string, done: (err: Error, tasks?: typings.IConfigTask[]) => void) {
   if (config.args.length) {
-    return done(undefined, config.args.map(function(address) {
+    return done(null, config.args.map(address => {
       return {address: address, config: config};
     }));
   }
-  fs.exists(batchPath, function(exists) {
-    if (!exists) return done(undefined, []);
-    fs.readFile(batchPath, 'utf8', function(err, data) {
+  fs.exists(batchPath, exists => {
+    if (!exists) return done(null, []);
+    fs.readFile(batchPath, 'utf8', (err, data) => {
       if (err) return done(err);
-      var map = [];
-      data.split(/\r?\n/).forEach(function(line) {
+      var map: typings.IConfigTask[] = [];
+      data.split(/\r?\n/).forEach(line => {
         if (/^(\/\/|#)/.test(line)) return;
-        var lineConfig = _parse(process.argv.concat(_split(line)));
-        lineConfig.args.forEach(function(address) {
+        var lineConfig = parse(process.argv.concat(split(line)));
+        lineConfig.args.forEach(address => {
           if (!address) return;
           map.push({address: address, config: lineConfig});
         });
       });
-      done(undefined, map);
+      done(null, map);
     });
   });
 }
 
 /**
  * Parses the arguments and returns a configuration.
- * @private
- * @param {Array.<string>} args
- * @returns {Object}
  */
-function _parse(args) {
-  return new Command().version(require('../package').version)
+function parse(args: string[]): typings.IConfigLine {
+  return new commander.Command().version(require('../package').version)
     // Authentication
     .option('-p, --pass <s>', 'The password.')
     .option('-u, --user <s>', 'The e-mail address or username.')
