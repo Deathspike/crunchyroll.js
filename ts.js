@@ -48,7 +48,10 @@ function clean(filePaths, done) {
 function compile(filePaths, done) {
   var execPath = path.join(__dirname, 'node_modules/.bin/tsc');
   var options = '--declaration --module CommonJS --noImplicitAny --outDir dist';
-  childProcess.exec([execPath, options].concat(filePaths).join(' '), done);
+  childProcess.exec([execPath, options].concat(filePaths).join(' '), function(err, stdout) {
+      if (stdout) return done(new Error(stdout));
+      done(null);
+    });
 }
 
 /**

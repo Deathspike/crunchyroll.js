@@ -17,14 +17,14 @@ function main(config: typings.IConfig, rtmpInputPath: string, filePath: string, 
     '-o "' + filePath + '.mkv" ' +
     '"' + videoPath + '" ' +
     '"' + subtitlePath + '"', {
-    maxBuffer: Infinity
-  }, err => {
-    if (err) return done(err);
-    unlink(videoPath, subtitlePath, err => {
-      if (err) unlinkTimeout(videoPath, subtitlePath, 5000);
-      done(null);
+      maxBuffer: Infinity
+    }, err => {
+      if (err) return done(err);
+      unlink(videoPath, subtitlePath, err => {
+        if (err) unlinkTimeout(videoPath, subtitlePath, 5000);
+        done(null);
+      });
     });
-  });
 }
 
 /**

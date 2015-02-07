@@ -79,7 +79,11 @@ function downloadSubtitle(config: typings.IConfig, player: typings.IEpisodePlaye
 /**
  * Streams the video to disk.
  */
-function downloadVideo(config: typings.IConfig, page: typings.IEpisodePage, player: typings.IEpisodePlayer, filePath: string, done: (err: Error) => void) {
+function downloadVideo(config: typings.IConfig,
+  page: typings.IEpisodePage,
+  player: typings.IEpisodePlayer,
+  filePath: string,
+  done: (err: Error) => void) {
   video.stream(
     player.video.host,
     player.video.file,

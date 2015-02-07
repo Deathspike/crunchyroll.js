@@ -17,8 +17,8 @@ export function get(config: typings.IConfig, options: request.Options, done: (er
 }
 
 /**
-* Performs a POST request for the resource.
-*/
+ * Performs a POST request for the resource.
+ */
 export function post(config: typings.IConfig, options: request.Options, done: (err: Error, result?: string) => void) {
   authenticate(config, err => {
     if (err) return done(err);

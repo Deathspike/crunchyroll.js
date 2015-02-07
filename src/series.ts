@@ -38,7 +38,11 @@ function main(config: typings.IConfig, address: string, done: (err: Error) => vo
 /**
  * Downloads the episode.
  */
-function download(cache: {[address: string]: number}, config: typings.IConfig, baseAddress: string, item: typings.ISeriesEpisode, done: (err: Error) => void) {
+function download(cache: {[address: string]: number},
+  config: typings.IConfig,
+  baseAddress: string,
+  item: typings.ISeriesEpisode,
+  done: (err: Error) => void) {
   if (!filter(config, item)) return done(null);
   var address = url.resolve(baseAddress, item.address);
   if (cache[address]) return done(null);
