@@ -48,7 +48,7 @@ function clean(filePaths, done) {
  * @param {function(Error)} done
  */
 function compile(filePaths, done) {
-    if (isTest) return done(null);
+  if (isTest) return done(null);
   var execPath = path.join(__dirname, 'node_modules/.bin/tsc');
   var options = '--declaration --module CommonJS --noImplicitAny --outDir dist';
   childProcess.exec([execPath, options].concat(filePaths).join(' '), function(err, stdout) {
