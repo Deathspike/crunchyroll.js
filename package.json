@@ -30,6 +30,7 @@
   },
   "scripts": {
     "prepublish": "npm run tsd && node ts",
+    "test":  "node ts --only-test",
     "tsd": "./node_modules/.bin/tsd reinstall --overwrite"
   }
 }

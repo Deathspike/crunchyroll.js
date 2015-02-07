@@ -2,6 +2,7 @@
 var childProcess = require('child_process');
 var fs = require('fs');
 var path = require('path');
+var isTest = process.argv[2] === '--only-test';
 
 read(function(err, fileNames) {
   clean(fileNames, function() {
@@ -27,6 +28,7 @@ read(function(err, fileNames) {
  * @param {function()} done
  */
 function clean(filePaths, done) {
+  if (isTest) return done();
   var i = -1;
   (function next() {
     i += 1;
@@ -46,6 +48,7 @@ function clean(filePaths, done) {
  * @param {function(Error)} done
  */
 function compile(filePaths, done) {
+    if (isTest) return done(null);
   var execPath = path.join(__dirname, 'node_modules/.bin/tsc');
   var options = '--declaration --module CommonJS --noImplicitAny --outDir dist';
   childProcess.exec([execPath, options].concat(filePaths).join(' '), function(err, stdout) {
