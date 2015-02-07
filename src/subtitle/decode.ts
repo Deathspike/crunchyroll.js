@@ -2,6 +2,7 @@
 'use strict';
 export = main;
 import crypto = require('crypto');
+import bigInt = require('big-integer');
 import zlib = require('zlib');
 
 /**
