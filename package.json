@@ -7,7 +7,10 @@
     "crunchyroll"
   ],
   "name": "crunchyroll",
-  "repository": "git://github.com/Deathspike/crunchyroll.js.git",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/Deathspike/crunchyroll.js.git"
+  },
   "version": "1.1.0",
   "bin": {
     "crunchyroll": "./bin/crunchyroll"
