@@ -38,7 +38,7 @@ function event(block: typings.ISubtitleEvent): string {
       style.$.margin_r + ',' +
       style.$.margin_v + ',' +
       style.$.effect + ',' +
-      style.$.text)).join('\n');
+      style.$.text)).join('\n') + '\n';
 }
 
 /**
@@ -53,7 +53,7 @@ function script(block: typings.ISubtitle): string {
     'PlayResY: ' + block.$.play_res_y + '\n' +
     'Subtitle ID: ' + block.$.id + '\n' +
     'Language: ' + block.$.lang_string + '\n' +
-    'Created: ' + block.$.created;
+    'Created: ' + block.$.created + '\n';
 }
 
 /**
@@ -89,5 +89,5 @@ function style(block: typings.ISubtitleStyle): string {
       style.$.margin_l + ',' +
       style.$.margin_r + ',' +
       style.$.margin_v + ',' +
-      style.$.encoding).join('\n');
+      style.$.encoding).join('\n') + '\n';
 }
