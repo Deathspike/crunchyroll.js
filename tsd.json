@@ -6,28 +6,28 @@
   "bundle": "typings/tsd.d.ts",
   "installed": {
     "node/node.d.ts": {
-      "commit": "42c8a3b74c05f6887ce21dd63c6234e424f9f8fe"
+      "commit": "3882d337bb0808cde9fe4c08012508a48c135482"
     },
     "commander/commander.d.ts": {
-      "commit": "42c8a3b74c05f6887ce21dd63c6234e424f9f8fe"
+      "commit": "3882d337bb0808cde9fe4c08012508a48c135482"
     },
     "xml2js/xml2js.d.ts": {
-      "commit": "42c8a3b74c05f6887ce21dd63c6234e424f9f8fe"
+      "commit": "3882d337bb0808cde9fe4c08012508a48c135482"
     },
     "cheerio/cheerio.d.ts": {
-      "commit": "42c8a3b74c05f6887ce21dd63c6234e424f9f8fe"
+      "commit": "3882d337bb0808cde9fe4c08012508a48c135482"
     },
     "mkdirp/mkdirp.d.ts": {
-      "commit": "42c8a3b74c05f6887ce21dd63c6234e424f9f8fe"
+      "commit": "3882d337bb0808cde9fe4c08012508a48c135482"
     },
     "request/request.d.ts": {
-      "commit": "42c8a3b74c05f6887ce21dd63c6234e424f9f8fe"
+      "commit": "3882d337bb0808cde9fe4c08012508a48c135482"
     },
     "big-integer/big-integer.d.ts": {
-      "commit": "42c8a3b74c05f6887ce21dd63c6234e424f9f8fe"
+      "commit": "3882d337bb0808cde9fe4c08012508a48c135482"
     },
     "form-data/form-data.d.ts": {
-      "commit": "42c8a3b74c05f6887ce21dd63c6234e424f9f8fe"
+      "commit": "3882d337bb0808cde9fe4c08012508a48c135482"
     }
   }
 }
