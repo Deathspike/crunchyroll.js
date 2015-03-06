@@ -10,13 +10,13 @@ import typings = require('../typings');
 /**
  * Merges the subtitle and video files into a Matroska Multimedia Container.
  */
-function main(config: typings.IConfig, rtmpInputPath: string, filePath: string, done: (err: Error) => void) {
+function main(config: typings.IConfig, isSubtitled: boolean, rtmpInputPath: string, filePath: string, done: (err: Error) => void) {
   var subtitlePath = filePath + '.' + (subtitle.formats[config.format] ? config.format : 'ass');
   var videoPath = filePath + path.extname(rtmpInputPath);
   childProcess.exec(command() + ' ' +
     '-o "' + filePath + '.mkv" ' +
     '"' + videoPath + '" ' +
-    '"' + subtitlePath + '"', {
+    (isSubtitled ? '"' + subtitlePath + '"' : ''), {
       maxBuffer: Infinity
     }, err => {
       if (err) return done(err);
