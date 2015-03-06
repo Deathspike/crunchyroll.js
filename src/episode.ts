@@ -63,8 +63,9 @@ function download(config: typings.IConfig, page: typings.IEpisodePage, player: t
 /**
  * Saves the subtitles to disk.
  */
-function downloadSubtitle(config: typings.IConfig, player: typings.IEpisodePlayer, filePath: string, done: (err: Error) => void) {
+function downloadSubtitle(config: typings.IConfig, player: typings.IEpisodePlayer, filePath: string, done: (err?: Error) => void) {
   var enc = player.subtitle;
+  if (!enc) return done();
   subtitle.decode(enc.id, enc.iv, enc.data, (err, data) => {
     if (err) return done(err);
     var formats = subtitle.formats;
@@ -151,12 +152,13 @@ function scrapePlayer(config: typings.IConfig, address: string, id: number, done
     }, (err: Error, player: typings.IEpisodePlayerConfig) => {
       if (err) return done(err);
       try {
+        var isSubtitled = Boolean(player['default:preload'].subtitle);
         done(null, {
-          subtitle: {
+          subtitle: isSubtitled ? {
             id: parseInt(player['default:preload'].subtitle.$.id, 10),
             iv: player['default:preload'].subtitle.iv,
             data: player['default:preload'].subtitle.data
-          },
+          } : null,
           video: {
             file: player['default:preload'].stream_info.file,
             host: player['default:preload'].stream_info.host

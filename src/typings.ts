@@ -33,7 +33,7 @@ export interface IEpisodePage {
 }
 
 export interface IEpisodePlayer {
-  subtitle: {
+  subtitle?: {
     id: number;
     iv: string;
     data: string;
