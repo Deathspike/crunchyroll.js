@@ -80,9 +80,9 @@ Download *Fairy Tail* to the current work directory:
 
     crunchyroll http://www.crunchyroll.com/fairy-tail
 
-Download *Fairy Tail* to `C:\Manga`:
+Download *Fairy Tail* to `C:\Anime`:
 
-    crunchyroll --output C:\Manga http://www.crunchyroll.com/fairy-tail
+    crunchyroll --output C:\Anime http://www.crunchyroll.com/fairy-tail
 
 #### Switches
 
