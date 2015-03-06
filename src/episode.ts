@@ -121,7 +121,7 @@ function scrapePage(config: typings.IConfig, address: string, done: (err: Error,
     if (err) return done(err);
     var $ = cheerio.load(result);
     var swf = /^([^?]+)/.exec($('link[rel=video_src]').attr('href'));
-    var regexp = /Watch\s+(.+?)(?:\s+Season\s+([0-9]+))?\s+Episode\s+([0-9]+)/;
+    var regexp = /-\s+(?:Watch\s+)?(.+?)(?:\s+Season\s+([0-9]+))?(?:\s+-)?\s+Episode\s+([0-9]+)/;
     var data = regexp.exec($('title').text());
     if (!swf || !data) return done(new Error('Invalid page.'));
     done(null, {
