@@ -22,5 +22,5 @@ function main(rtmpUrl: string, rtmpInputPath: string, swfUrl: string, filePath: 
  */
 function command(): string {
   if (os.platform() !== 'win32') return 'rtmpdump';
-  return path.join(__dirname, '../../bin/rtmpdump.exe');
+  return '"' + path.join(__dirname, '../../bin/rtmpdump.exe') + '"';
 }

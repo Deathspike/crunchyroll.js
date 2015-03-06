@@ -32,7 +32,7 @@ function main(config: typings.IConfig, rtmpInputPath: string, filePath: string, 
  */
 function command(): string {
   if (os.platform() !== 'win32') return 'mkvmerge';
-  return path.join(__dirname, '../../bin/mkvmerge.exe');
+  return '"' + path.join(__dirname, '../../bin/mkvmerge.exe') + '"';
 }
 
 /**
