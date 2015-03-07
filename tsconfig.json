@@ -1,0 +1,40 @@
+{
+    "version": "1.4.1",
+    "compilerOptions": {
+        "declaration": true,
+        "noImplicitAny": true,
+        "removeComments": false,
+        "module": "commonjs",
+        "outDir": "dist",
+        "target": "es5"
+    },
+    "filesGlob": [
+        "typings/**/*.ts",
+        "src/**/*.ts"
+    ],
+    "files": [
+        "typings/big-integer/big-integer.d.ts",
+        "typings/cheerio/cheerio.d.ts",
+        "typings/commander/commander.d.ts",
+        "typings/form-data/form-data.d.ts",
+        "typings/mkdirp/mkdirp.d.ts",
+        "typings/node/node.d.ts",
+        "typings/request/request.d.ts",
+        "typings/xml2js/xml2js.d.ts",
+        "src/batch.ts",
+        "src/cli.ts",
+        "src/episode.ts",
+        "src/index.ts",
+        "src/request.ts",
+        "src/series.ts",
+        "src/subtitle/decode.ts",
+        "src/subtitle/formats/ass.ts",
+        "src/subtitle/formats/index.ts",
+        "src/subtitle/formats/srt.ts",
+        "src/subtitle/index.ts",
+        "src/typings.ts",
+        "src/video/index.ts",
+        "src/video/merge.ts",
+        "src/video/stream.ts"
+    ]
+}
