@@ -4,9 +4,14 @@ var fs = require('fs');
 var path = require('path');
 var isTest = process.argv[2] === '--only-test';
 
-// TODO: This file can use some cleaning up. We want to use the tsconfig.json
-// and go from there, but then without source maps. That should give us a final
-// build output. For now, this legacy build file will remain to do its job.
+// TODO: This build task should be removed upon release of TypeScript 1.5 with
+// the support for `tsconfig.json`. Invoking `tsc` from `package.json` will then
+// read the configuration and compile accordingly. It seems that `TSLint` will,
+// eventually, support this mechanism too. That prevents the need for any kind
+// of build task and will run entirely based on instructions from `npm`.
+//
+// Reference #1: https://github.com/Microsoft/TypeScript/issues/1667
+// Reference #2: https://github.com/palantir/tslint/issues/281
 
 read(function(err, fileNames) {
   clean(fileNames, function() {
