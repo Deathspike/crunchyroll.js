@@ -112,10 +112,6 @@ Download *Fairy Tail* to `C:\Anime`:
 
 More information will be added at a later point. For now the recommendations are:
 
-* Visual Studio 2013 Update 4 (Core)
-* NodeJS Tools (Debugging)
-* TypeScript 1.4 (Language)
-* ReSharper 9.0+ (Hints/Formatting)
-* Web Essentials (TSLint)
+* Atom with `atom-typescript` and `linter-tslint` (and dependencies).
 
 Since this project uses TypeScript, compile with `node ts` or `npm install`.
