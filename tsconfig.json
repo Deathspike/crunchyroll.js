@@ -6,21 +6,14 @@
         "removeComments": false,
         "module": "commonjs",
         "outDir": "dist",
+        "sourceMap": true,
         "target": "es5"
     },
     "filesGlob": [
-        "typings/**/*.ts",
-        "src/**/*.ts"
+        "src/**/*.ts",
+        "typings/**/*.ts"
     ],
     "files": [
-        "typings/big-integer/big-integer.d.ts",
-        "typings/cheerio/cheerio.d.ts",
-        "typings/commander/commander.d.ts",
-        "typings/form-data/form-data.d.ts",
-        "typings/mkdirp/mkdirp.d.ts",
-        "typings/node/node.d.ts",
-        "typings/request/request.d.ts",
-        "typings/xml2js/xml2js.d.ts",
         "src/batch.ts",
         "src/cli.ts",
         "src/episode.ts",
@@ -35,6 +28,14 @@
         "src/typings.ts",
         "src/video/index.ts",
         "src/video/merge.ts",
-        "src/video/stream.ts"
+        "src/video/stream.ts",
+        "typings/big-integer/big-integer.d.ts",
+        "typings/cheerio/cheerio.d.ts",
+        "typings/commander/commander.d.ts",
+        "typings/form-data/form-data.d.ts",
+        "typings/mkdirp/mkdirp.d.ts",
+        "typings/node/node.d.ts",
+        "typings/request/request.d.ts",
+        "typings/xml2js/xml2js.d.ts"
     ]
 }
