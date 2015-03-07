@@ -4,6 +4,10 @@ var fs = require('fs');
 var path = require('path');
 var isTest = process.argv[2] === '--only-test';
 
+// TODO: This file can use some cleaning up. We want to use the tsconfig.json
+// and go from there, but then without source maps. That should give us a final
+// build output. For now, this legacy build file will remain to do its job.
+
 read(function(err, fileNames) {
   clean(fileNames, function() {
     var hasLintError = false;
