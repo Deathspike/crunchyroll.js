@@ -29,7 +29,7 @@ function event(block: typings.ISubtitleEvent): string {
   var format = 'Layer,Start,End,Style,Name,MarginL,MarginR,MarginV,Effect,Text';
   return '[Events]\n' +
     'Format: ' + format + '\n' +
-    block.event.map(style => ('Dialogue: 0,' +
+    [].concat(block.event).map(style => ('Dialogue: 0,' +
       style.$.start + ',' +
       style.$.end + ',' +
       style.$.style + ',' +
@@ -66,7 +66,7 @@ function style(block: typings.ISubtitleStyle): string {
     'MarginL,MarginR,MarginV,Encoding';
   return '[V4+ Styles]\n' +
     'Format: ' + format + '\n' +
-    block.style.map(style => 'Style: ' +
+    [].concat(block.style).map(style => 'Style: ' +
       style.$.name + ',' +
       style.$.font_name + ',' +
       style.$.font_size + ',' +
