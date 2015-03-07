@@ -16,21 +16,21 @@
     "crunchyroll": "./bin/crunchyroll"
   },
   "dependencies": {
-    "big-integer": "^1.4.3",
+    "big-integer": "^1.4.4",
     "cheerio": "^0.18.0",
     "commander": "^2.6.0",
     "mkdirp": "^0.5.0",
     "request": "^2.53.0",
-    "xml2js": "^0.4.4"
+    "xml2js": "^0.4.5"
   },
   "devDependencies": {
     "tsd": "^0.5.7",
-    "tslint": "^2.1.0",
+    "tslint": "^2.1.1",
     "typescript": "^1.4.1"
   },
   "scripts": {
     "prepublish": "npm run tsd && node ts",
     "test":  "node ts --only-test",
-    "tsd": "./node_modules/.bin/tsd reinstall --overwrite"
+    "tsd": "tsd reinstall --overwrite"
   }
 }

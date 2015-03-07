@@ -50,11 +50,11 @@ function clean(filePaths, done) {
 function compile(filePaths, done) {
   if (isTest) return done(null);
   var execPath = path.join(__dirname, 'node_modules/.bin/tsc');
-  var options = '--declaration --module CommonJS --noImplicitAny --outDir dist';
+  var options = '--declaration --module CommonJS --noImplicitAny --outDir dist --target ES5';
   childProcess.exec([execPath, options].concat(filePaths).join(' '), function(err, stdout) {
-      if (stdout) return done(new Error(stdout));
-      done(null);
-    });
+    if (stdout) return done(new Error(stdout));
+    done(null);
+  });
 }
 
 /**
@@ -83,10 +83,5 @@ function lint(filePaths, handler, done) {
  * @param {function(Error, Array.<string>)} done
  */
 function read(done) {
-  var contents = fs.readFileSync('crunchyroll.js.njsproj', 'utf8');
-  var expression = /<TypeScriptCompile\s+Include="([\w\W]+?\.ts)" \/>/g;
-  var matches;
-  var filePaths = [];
-  while ((matches = expression.exec(contents))) filePaths.push(matches[1]);
-  done(null, filePaths);
+  done(null, JSON.parse(fs.readFileSync('tsconfig.json', 'utf8')).files);
 }
