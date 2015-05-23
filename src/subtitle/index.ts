@@ -1,3 +1,4 @@
 'use strict';
-export import decode = require('./decode');
-export import formats = require('./formats/index');
+import decode from './decode';
+import formats from './formats/index';
+export default {decode, formats};

@@ -1,15 +1,13 @@
 'use strict';
-export = main;
 import commander = require('commander');
 import fs = require('fs');
 import path = require('path');
-import series = require('./series');
-import typings = require('./typings');
+import series from './series';
 
 /**
  * Streams the batch of series to disk.
  */
-function main(args: string[], done: (err?: Error) => void) {
+export default function(args: string[], done: (err?: Error) => void) {
   var config = parse(args);
   var batchPath = path.join(config.output || process.cwd(), 'CrunchyRoll.txt');
   tasks(config, batchPath, (err, tasks) => {
@@ -41,14 +39,15 @@ function split(value: string): string[] {
       previous = i + 1;
     }
   }
-  pieces.push(value.substring(previous, i).match(/^"?(.+?)"?$/)[1]);
+  var lastPiece = value.substring(previous, i).match(/^"?(.+?)"?$/);
+  if (lastPiece) pieces.push(lastPiece[1]);
   return pieces;
 }
 
 /**
  * Parses the configuration or reads the batch-mode file for tasks.
  */
-function tasks(config: typings.IConfigLine, batchPath: string, done: (err: Error, tasks?: typings.IConfigTask[]) => void) {
+function tasks(config: IConfigLine, batchPath: string, done: (err: Error, tasks?: IConfigTask[]) => void) {
   if (config.args.length) {
     return done(null, config.args.map(address => {
       return {address: address, config: config};
@@ -58,7 +57,7 @@ function tasks(config: typings.IConfigLine, batchPath: string, done: (err: Error
     if (!exists) return done(null, []);
     fs.readFile(batchPath, 'utf8', (err, data) => {
       if (err) return done(err);
-      var map: typings.IConfigTask[] = [];
+      var map: IConfigTask[] = [];
       data.split(/\r?\n/).forEach(line => {
         if (/^(\/\/|#)/.test(line)) return;
         var lineConfig = parse(process.argv.concat(split(line)));
@@ -75,7 +74,7 @@ function tasks(config: typings.IConfigLine, batchPath: string, done: (err: Error
 /**
  * Parses the arguments and returns a configuration.
  */
-function parse(args: string[]): typings.IConfigLine {
+function parse(args: string[]): IConfigLine {
   return new commander.Command().version(require('../package').version)
     // Authentication
     .option('-p, --pass <s>', 'The password.')

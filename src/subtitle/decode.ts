@@ -1,6 +1,5 @@
 /* tslint:disable:no-bitwise false */
 'use strict';
-export = main;
 import crypto = require('crypto');
 import bigInt = require('big-integer');
 import zlib = require('zlib');
@@ -8,7 +7,7 @@ import zlib = require('zlib');
 /**
  * Decodes the data.
  */
-function main(id: number, iv: Buffer|string, data: Buffer|string, done: (err?: Error, result?: Buffer) => void) {
+ export default function(id: number, iv: Buffer|string, data: Buffer|string, done: (err?: Error, result?: Buffer) => void) {
   try {
     decompress(decrypt(id, iv, data), done);
   } catch (e) {

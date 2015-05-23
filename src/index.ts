@@ -1,4 +1,5 @@
 'use strict';
-export import batch = require('./batch');
-export import episode = require('./episode');
-export import series = require('./series');
+import batch from './batch';
+import episode from './episode';
+import series from './series';
+export {batch, episode, series};
