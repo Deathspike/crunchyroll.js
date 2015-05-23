@@ -1,16 +1,14 @@
 'use strict';
-export = main;
 import xml2js = require('xml2js');
-import typings = require('../../typings');
 
 /**
  * Converts an input buffer to a SubStation Alpha subtitle.
  */
-function main(input: string|Buffer, done: (err: Error, subtitle?: string) => void) {
+export default function(input: string|Buffer, done: (err: Error, subtitle?: string) => void) {
   xml2js.parseString(input.toString(), {
     explicitArray: false,
     explicitRoot: false
-  }, (err: Error, xml: typings.ISubtitle) => {
+  }, (err: Error, xml: ISubtitle) => {
     if (err) return done(err);
     try {
       done(null, script(xml) + '\n' +
@@ -25,7 +23,7 @@ function main(input: string|Buffer, done: (err: Error, subtitle?: string) => voi
 /**
  * Converts the event block.
  */
-function event(block: typings.ISubtitleEvent): string {
+function event(block: ISubtitleEvent): string {
   var format = 'Layer,Start,End,Style,Name,MarginL,MarginR,MarginV,Effect,Text';
   return '[Events]\n' +
     'Format: ' + format + '\n' +
@@ -44,7 +42,7 @@ function event(block: typings.ISubtitleEvent): string {
 /**
  * Converts the script block.
  */
-function script(block: typings.ISubtitle): string {
+function script(block: ISubtitle): string {
   return '[Script Info]\n' +
     'Title: ' + block.$.title + '\n' +
     'ScriptType: v4.00+\n' +
@@ -59,7 +57,7 @@ function script(block: typings.ISubtitle): string {
 /**
  * Converts the style block.
  */
-function style(block: typings.ISubtitleStyle): string {
+function style(block: ISubtitleStyle): string {
   var format = 'Name,Fontname,Fontsize,PrimaryColour,SecondaryColour,' +
     'OutlineColour,BackColour,Bold,Italic,Underline,StrikeOut,ScaleX,' +
     'ScaleY,Spacing,Angle,BorderStyle,Outline,Shadow,Alignment,' +

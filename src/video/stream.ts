@@ -1,5 +1,4 @@
 'use strict';
-export = main;
 import childProcess = require('child_process');
 import path = require('path');
 import os = require('os');
@@ -7,7 +6,7 @@ import os = require('os');
 /**
  * Streams the video to disk.
  */
-function main(rtmpUrl: string, rtmpInputPath: string, swfUrl: string, filePath: string, done: (err: Error) => void) {
+ export default function(rtmpUrl: string, rtmpInputPath: string, swfUrl: string, filePath: string, done: (err: Error) => void) {
   childProcess.exec(command() + ' ' +
     '-r "' + rtmpUrl + '" ' +
     '-y "' + rtmpInputPath + '" ' +

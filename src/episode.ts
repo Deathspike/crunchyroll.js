@@ -1,19 +1,17 @@
 'use strict';
-export = main;
 import cheerio = require('cheerio');
 import fs = require('fs');
 import mkdirp = require('mkdirp');
 import request = require('./request');
 import path = require('path');
-import subtitle = require('./subtitle/index');
-import typings = require('./typings');
-import video = require('./video/index');
+import subtitle from './subtitle/index';
+import video from './video/index';
 import xml2js = require('xml2js');
 
 /**
  * Streams the episode to disk.
  */
-function main(config: typings.IConfig, address: string, done: (err: Error) => void) {
+export default function(config: IConfig, address: string, done: (err: Error) => void) {
   scrapePage(config, address, (err, page) => {
     if (err) return done(err);
     scrapePlayer(config, address, page.id, (err, player) => {
@@ -38,7 +36,7 @@ function complete(message: string, begin: number, done: (err: Error) => void) {
 /**
  * Downloads the subtitle and video.
  */
-function download(config: typings.IConfig, page: typings.IEpisodePage, player: typings.IEpisodePlayer, done: (err: Error) => void) {
+function download(config: IConfig, page: IEpisodePage, player: IEpisodePlayer, done: (err: Error) => void) {
   var series = config.series || page.series;
   var fileName = name(config, page, series);
   var filePath = path.join(config.output || process.cwd(), series, fileName);
@@ -64,7 +62,7 @@ function download(config: typings.IConfig, page: typings.IEpisodePage, player: t
 /**
  * Saves the subtitles to disk.
  */
-function downloadSubtitle(config: typings.IConfig, player: typings.IEpisodePlayer, filePath: string, done: (err?: Error) => void) {
+function downloadSubtitle(config: IConfig, player: IEpisodePlayer, filePath: string, done: (err?: Error) => void) {
   var enc = player.subtitle;
   if (!enc) return done();
   subtitle.decode(enc.id, enc.iv, enc.data, (err, data) => {
@@ -81,9 +79,9 @@ function downloadSubtitle(config: typings.IConfig, player: typings.IEpisodePlaye
 /**
  * Streams the video to disk.
  */
-function downloadVideo(config: typings.IConfig,
-  page: typings.IEpisodePage,
-  player: typings.IEpisodePlayer,
+function downloadVideo(config: IConfig,
+  page: IEpisodePage,
+  player: IEpisodePlayer,
   filePath: string,
   done: (err: Error) => void) {
   video.stream(
@@ -97,7 +95,7 @@ function downloadVideo(config: typings.IConfig,
 /**
  * Names the file based on the config, page, series and tag.
  */
-function name(config: typings.IConfig, page: typings.IEpisodePage, series: string) {
+function name(config: IConfig, page: IEpisodePage, series: string) {
   var episode = (page.episode < 10 ? '0' : '') + page.episode;
   var volume = (page.volume < 10 ? '0' : '') + page.volume;
   var tag = config.tag || 'CrunchyRoll';
@@ -116,7 +114,7 @@ function prefix(value: number|string, length: number) {
 /**
  * Requests the page data and scrapes the id, episode, series and swf.
  */
-function scrapePage(config: typings.IConfig, address: string, done: (err: Error, page?: typings.IEpisodePage) => void) {
+function scrapePage(config: IConfig, address: string, done: (err: Error, page?: IEpisodePage) => void) {
   var id = parseInt((address.match(/[0-9]+$/) || ['0'])[0], 10);
   if (!id) return done(new Error('Invalid address.'));
   request.get(config, address, (err, result) => {
@@ -139,7 +137,7 @@ function scrapePage(config: typings.IConfig, address: string, done: (err: Error,
 /**
  * Requests the player data and scrapes the subtitle and video data.
  */
-function scrapePlayer(config: typings.IConfig, address: string, id: number, done: (err: Error, player?: typings.IEpisodePlayer) => void) {
+function scrapePlayer(config: IConfig, address: string, id: number, done: (err: Error, player?: IEpisodePlayer) => void) {
   var url = address.match(/^(https?:\/\/[^\/]+)/);
   if (!url) return done(new Error('Invalid address.'));
   request.post(config, {
@@ -150,7 +148,7 @@ function scrapePlayer(config: typings.IConfig, address: string, id: number, done
     xml2js.parseString(result, {
       explicitArray: false,
       explicitRoot: false
-    }, (err: Error, player: typings.IEpisodePlayerConfig) => {
+    }, (err: Error, player: IEpisodePlayerConfig) => {
       if (err) return done(err);
       try {
         var isSubtitled = Boolean(player['default:preload'].subtitle);

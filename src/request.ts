@@ -1,12 +1,11 @@
 'use strict';
 import request = require('request');
-import typings = require('./typings');
 var isAuthenticated = false;
 
 /**
  * Performs a GET request for the resource.
  */
-export function get(config: typings.IConfig, options: request.Options, done: (err: Error, result?: string) => void) {
+export function get(config: IConfig, options: request.Options, done: (err: Error, result?: string) => void) {
   authenticate(config, err => {
     if (err) return done(err);
     request.get(modify(options), (err: Error, response: any, body: any) => {
@@ -19,7 +18,7 @@ export function get(config: typings.IConfig, options: request.Options, done: (er
 /**
  * Performs a POST request for the resource.
  */
-export function post(config: typings.IConfig, options: request.Options, done: (err: Error, result?: string) => void) {
+export function post(config: IConfig, options: request.Options, done: (err: Error, result?: string) => void) {
   authenticate(config, err => {
     if (err) return done(err);
     request.post(modify(options), (err: Error, response: any, body: any) => {
@@ -32,7 +31,7 @@ export function post(config: typings.IConfig, options: request.Options, done: (e
 /**
  * Authenticates using the configured pass and user.
  */
-function authenticate(config: typings.IConfig, done: (err: Error) => void) {
+function authenticate(config: IConfig, done: (err: Error) => void) {
   if (isAuthenticated || !config.pass || !config.user) return done(null);
   var options = {
     form: {

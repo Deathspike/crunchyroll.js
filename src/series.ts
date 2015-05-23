@@ -1,18 +1,16 @@
 'use strict';
-export = main;
 import cheerio = require('cheerio');
-import episode = require('./episode');
+import episode from './episode';
 import fs = require('fs');
 import request = require('./request');
 import path = require('path');
-import typings = require('./typings');
 import url = require('url');
 var persistent = '.crpersistent';
 
 /**
  * Streams the series to disk.
  */
-function main(config: typings.IConfig, address: string, done: (err: Error) => void) {
+export default function(config: IConfig, address: string, done: (err: Error) => void) {
   var persistentPath = path.join(config.output || process.cwd(), persistent);
   fs.readFile(persistentPath, 'utf8', (err, contents) => {
     var cache = config.cache ? {} : JSON.parse(contents || '{}');
@@ -39,9 +37,9 @@ function main(config: typings.IConfig, address: string, done: (err: Error) => vo
  * Downloads the episode.
  */
 function download(cache: {[address: string]: number},
-  config: typings.IConfig,
+  config: IConfig,
   baseAddress: string,
-  item: typings.ISeriesEpisode,
+  item: ISeriesEpisode,
   done: (err: Error) => void) {
   if (!filter(config, item)) return done(null);
   var address = url.resolve(baseAddress, item.address);
@@ -56,7 +54,7 @@ function download(cache: {[address: string]: number},
 /**
  * Filters the item based on the configuration.
  */
-function filter(config: typings.IConfig, item: typings.ISeriesEpisode) {
+function filter(config: IConfig, item: ISeriesEpisode) {
   // Filter on chapter.
   var episodeFilter = config.episode;
   if (episodeFilter > 0 && item.episode <= episodeFilter) return false;
@@ -72,13 +70,13 @@ function filter(config: typings.IConfig, item: typings.ISeriesEpisode) {
 /**
  * Requests the page and scrapes the episodes and series.
  */
-function page(config: typings.IConfig, address: string, done: (err: Error, result?: typings.ISeries) => void) {
+function page(config: IConfig, address: string, done: (err: Error, result?: ISeries) => void) {
   request.get(config, address, (err, result) => {
     if (err) return done(err);
     var $ = cheerio.load(result);
     var title = $('span[itemprop=name]').text();
     if (!title) return done(new Error('Invalid page.'));
-    var episodes: typings.ISeriesEpisode[] = [];
+    var episodes: ISeriesEpisode[] = [];
     $('.episode').each((i, el) => {
       if ($(el).children('img[src*=coming_soon]').length) return;
       var volume = /([0-9]+)\s*$/.exec($(el).closest('ul').prev('a').text());

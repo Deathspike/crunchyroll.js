@@ -1,14 +1,12 @@
 'use strict';
-export = srt;
 import xml2js = require('xml2js');
-import typings = require('../../typings');
 
 /**
  * Converts an input buffer to a SubRip subtitle.
  */
-function srt(input: Buffer|string, done: (err: Error, subtitle?: string) => void) {
+ export default function(input: Buffer|string, done: (err: Error, subtitle?: string) => void) {
   var options = {explicitArray: false, explicitRoot: false};
-  xml2js.parseString(input.toString(), options, (err: Error, xml: typings.ISubtitle) => {
+  xml2js.parseString(input.toString(), options, (err: Error, xml: ISubtitle) => {
     try {
       if (err) return done(err);
       done(null, xml.events.event.map((event, index) => {

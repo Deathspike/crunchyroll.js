@@ -1,10 +1,8 @@
 'use strict';
-export = main;
-import ass = require('./ass');
-import srt = require('./srt');
-import typings = require('../../typings');
+import ass from './ass';
+import srt from './srt';
 
-var main: typings.IFormatterTable = {
+export default <IFormatterTable> {
   ass: ass,
   srt: srt
 };

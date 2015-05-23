@@ -1,3 +1,4 @@
 'use strict';
-export import merge = require('./merge');
-export import stream = require('./stream');
+import merge from './merge';
+import stream from './stream';
+export default {merge, stream};
