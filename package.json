@@ -11,26 +11,26 @@
     "type": "git",
     "url": "git://github.com/Deathspike/crunchyroll.js.git"
   },
-  "version": "1.1.4",
+  "version": "1.1.5",
   "bin": {
     "crunchyroll": "./bin/crunchyroll"
   },
   "dependencies": {
-    "big-integer": "^1.4.4",
-    "cheerio": "^0.18.0",
-    "commander": "^2.6.0",
-    "mkdirp": "^0.5.0",
-    "request": "^2.53.0",
-    "xml2js": "^0.4.5"
+    "big-integer": "1.4.4",
+    "cheerio": "0.18.0",
+    "commander": "2.6.0",
+    "mkdirp": "0.5.0",
+    "request": "2.53.0",
+    "xml2js": "0.4.5"
   },
   "devDependencies": {
-    "tsd": "^0.5.7",
-    "tslint": "^2.1.1",
-    "typescript": "^1.4.1"
+    "tsd": "0.5.7",
+    "tslint": "2.3.0-beta",
+    "typescript": "1.5.0-beta"
   },
   "scripts": {
-    "prepublish": "npm run tsd && node ts",
+    "prepublish": "npm run tsd && tsc",
     "test":  "node ts --only-test",
-    "tsd": "tsd reinstall --overwrite"
+    "tsd": "tsd reinstall -o -s"
   }
 }
