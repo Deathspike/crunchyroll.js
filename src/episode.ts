@@ -121,8 +121,8 @@ function scrapePage(config: IConfig, address: string, done: (err: Error, page?: 
     if (err) return done(err);
     var $ = cheerio.load(result);
     var swf = /^([^?]+)/.exec($('link[rel=video_src]').attr('href'));
-    var regexp = /-\s+(?:Watch\s+)?(.+?)(?:\s+Season\s+([0-9]+))?(?:\s+-)?\s+Episode\s+([0-9]+)/;
-    var data = regexp.exec($('title').text());
+    var regexp =/([^\s]+)\s+.*([0-9]+),\n?[^0-9]*([0-9]+)/;
+    var data =regexp.exec($('#showmedia_about_media').text());
     if (!swf || !data) return done(new Error('Invalid page.'));
     done(null, {
       id: id,
