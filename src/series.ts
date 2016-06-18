@@ -44,7 +44,7 @@ function download(cache: {[address: string]: number},
   if (!filter(config, item)) return done(null);
   var address = url.resolve(baseAddress, item.address);
   if (cache[address]) return done(null);
-  episode(config, address, err => {
+  episode(config, address,item.volume, err => {
     if (err) return done(err);
     cache[address] = Date.now();
     done(null);

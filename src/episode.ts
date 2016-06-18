@@ -11,8 +11,8 @@ import xml2js = require('xml2js');
 /**
  * Streams the episode to disk.
  */
-export default function(config: IConfig, address: string, done: (err: Error) => void) {
-  scrapePage(config, address, (err, page) => {
+export default function(config: IConfig, address: string,volume: number , done: (err: Error) => void) {
+  scrapePage(config, address,volume, (err, page) => {
     if (err) return done(err);
     scrapePlayer(config, address, page.id, (err, player) => {
       if (err) return done(err);
@@ -114,22 +114,22 @@ function prefix(value: number|string, length: number) {
 /**
  * Requests the page data and scrapes the id, episode, series and swf.
  */
-function scrapePage(config: IConfig, address: string, done: (err: Error, page?: IEpisodePage) => void) {
+function scrapePage(config: IConfig, address: string,volume: number, done: (err: Error, page?: IEpisodePage) => void) {
   var id = parseInt((address.match(/[0-9]+$/) || ['0'])[0], 10);
   if (!id) return done(new Error('Invalid address.'));
   request.get(config, address, (err, result) => {
     if (err) return done(err);
     var $ = cheerio.load(result);
     var swf = /^([^?]+)/.exec($('link[rel=video_src]').attr('href'));
-    var regexp =/([^\s]+)\s+.*([0-9]+),\n?[^0-9]*([0-9]+)/;
-    var data =regexp.exec($('#showmedia_about_media').text());
+    var regexp = /-\s+(?:Watch\s+)?(.+?)(?:\s+Season\s+([0-9]+))?(?:\s+-)?\s+Episode\s+([0-9]+)/;
+    var data = regexp.exec($('title').text());
     if (!swf || !data) return done(new Error('Invalid page.'));
     done(null, {
       id: id,
       episode: parseInt(data[3], 10),
       series: data[1],
       swf: swf[1],
-      volume: parseInt(data[2], 10) || 1
+      volume: volume//parseInt(data[2], 10) || 1
     });
   });
 }
