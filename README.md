@@ -26,14 +26,14 @@ Use the applicable instructions to install. Is your operating system not listed?
 
 ### Debian (Mint, Ubuntu, etc)
 
-1. Run in *Terminal*: `sudo apt-get install nodejs npm mkvtoolnix rtmpdump`
+1. Run in *Terminal*: `sudo apt-get install nodejs npm mkvtoolnix rtmpdump ffmpeg`
 2. Run in *Terminal*: `sudo ln -s /usr/bin/nodejs /usr/bin/node`
 3. Run in *Terminal*: `sudo npm install -g crunchyroll`
 
 ### Mac OS X
 
 1. Install *Homebrew* following the instructions at http://brew.sh/
-2. Run in *Terminal*: `brew install node mkvtoolnix rtmpdump`
+2. Run in *Terminal*: `brew install node mkvtoolnix rtmpdump ffmpeg`
 3. Run in *Terminal*: `npm install -g crunchyroll`
 
 ### Windows

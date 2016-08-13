@@ -88,7 +88,7 @@ function downloadVideo(config: IConfig,
     player.video.host,
     player.video.file,
     page.swf,
-    filePath + path.extname(player.video.file),
+    filePath, path.extname(player.video.file),
     done);
 }
 
@@ -152,6 +152,11 @@ function scrapePlayer(config: IConfig, address: string, id: number, done: (err: 
       if (err) return done(err);
       try {
         var isSubtitled = Boolean(player['default:preload'].subtitle);
+		var streamMode="RTMP";
+		if (player['default:preload'].stream_info.host == "")
+		{
+			streamMode="HLS";
+		}
         done(null, {
           subtitle: isSubtitled ? {
             id: parseInt(player['default:preload'].subtitle.$.id, 10),
@@ -159,6 +164,7 @@ function scrapePlayer(config: IConfig, address: string, id: number, done: (err: 
             data: player['default:preload'].subtitle.data
           } : null,
           video: {
+			mode: streamMode;
             file: player['default:preload'].stream_info.file,
             host: player['default:preload'].stream_info.host
           }
