@@ -50,7 +50,7 @@ function download(config: IConfig, page: IEpisodePage, player: IEpisodePlayer, d
         if (err) return done(err);
         if (config.merge) return complete('Finished ' + fileName, now, done);
         var isSubtited = Boolean(player.subtitle);
-        video.merge(config, isSubtited, player.video.file, filePath, err => {
+        video.merge(config, isSubtited, player.video.file, filePath, player.mode, err => {
           if (err) return done(err);
           complete('Finished ' + fileName, now, done);
         });
