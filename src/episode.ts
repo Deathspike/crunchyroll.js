@@ -89,6 +89,7 @@ function downloadVideo(config: IConfig,
     player.video.file,
     page.swf,
     filePath, path.extname(player.video.file),
+    player.video.mode,
     done);
 }
 
@@ -164,7 +165,7 @@ function scrapePlayer(config: IConfig, address: string, id: number, done: (err: 
             data: player['default:preload'].subtitle.data
           } : null,
           video: {
-			mode: streamMode;
+            mode: streamMode;
             file: player['default:preload'].stream_info.file,
             host: player['default:preload'].stream_info.host
           }

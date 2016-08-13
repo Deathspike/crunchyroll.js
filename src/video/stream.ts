@@ -6,7 +6,7 @@ import os = require('os');
 /**
  * Streams the video to disk.
  */
- export default function(rtmpUrl: string, rtmpInputPath: string, swfUrl: string, filePath: string, fileExt: string, done: (err: Error) => void) {
+ export default function(rtmpUrl: string, rtmpInputPath: string, swfUrl: string, filePath: string, fileExt: string, mode: string, done: (err: Error) => void) {
  	if (mode == "RTMP")
  	{
      	childProcess.exec(command("rtmpdump") + ' ' +
