@@ -1,19 +1,19 @@
 {
-  "author": "Roel van Uden",
-  "description": "CrunchyRoll.js is capable of downloading anime episodes from the popular CrunchyRoll streaming service.",
+  "author": "Godzil",
+  "description": "Crunchy.js is a fork of Crunchyroll.js, capable of downloading anime episodes from the popular CrunchyRoll streaming service.",
   "keywords": [
     "anime",
     "download",
     "crunchyroll"
   ],
-  "name": "crunchyroll",
+  "name": "crunchy",
   "repository": {
     "type": "git",
-    "url": "git://github.com/Deathspike/crunchyroll.js.git"
+    "url": "git://github.com/Godzil/crunchyroll.js.git"
   },
-  "version": "1.1.5",
+  "version": "1.1.6",
   "bin": {
-    "crunchyroll": "./bin/crunchyroll"
+    "crunchy": "./bin/crunchy"
   },
   "dependencies": {
     "big-integer": "1.4.4",
