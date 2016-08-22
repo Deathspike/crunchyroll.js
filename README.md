@@ -47,11 +47,11 @@ Use the applicable instructions to install. Is your operating system not listed?
 
 Use the applicable instructions for the interface of your choice (currently limited to command-line).
 
-### Command-line Interface (`crunchyroll`)
+### Command-line Interface (`crunchy`)
 
-The [command-line interface](http://en.wikipedia.org/wiki/Command-line_interface) does not have a graphical component and is ideal for automation purposes and headless machines. The interface can run using a sequence of series addresses (the site address containing the episode listing), or with a batch-mode source file. The `crunchyroll --help` command will produce the following output:
+The [command-line interface](http://en.wikipedia.org/wiki/Command-line_interface) does not have a graphical component and is ideal for automation purposes and headless machines. The interface can run using a sequence of series addresses (the site address containing the episode listing), or with a batch-mode source file. The `crunchy --help` command will produce the following output:
 
-    Usage: crunchyroll [options]
+    Usage: crunchy [options]
 
     Options:
 
@@ -76,15 +76,15 @@ When no sequence of series addresses is provided, the batch-mode source file wil
 
 Download in batch-mode:
 
-    crunchyroll
+    crunchy
 
 Download *Fairy Tail* to the current work directory:
 
-    crunchyroll http://www.crunchyroll.com/fairy-tail
+    crunchy http://www.crunchyroll.com/fairy-tail
 
 Download *Fairy Tail* to `C:\Anime`:
 
-    crunchyroll --output C:\Anime http://www.crunchyroll.com/fairy-tail
+    crunchy --output C:\Anime http://www.crunchyroll.com/fairy-tail
 
 #### Switches
 
