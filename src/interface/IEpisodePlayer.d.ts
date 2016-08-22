@@ -5,6 +5,7 @@ interface IEpisodePlayer {
     data: string;
   };
   video: {
+    mode: string;
     file: string;
     host: string;
   };
