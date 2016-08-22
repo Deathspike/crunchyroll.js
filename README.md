@@ -30,18 +30,18 @@ Use the applicable instructions to install. Is your operating system not listed?
 
 1. Run in *Terminal*: `sudo apt-get install nodejs npm mkvtoolnix rtmpdump ffmpeg`
 2. Run in *Terminal*: `sudo ln -s /usr/bin/nodejs /usr/bin/node`
-3. Run in *Terminal*: `sudo npm install -g godzil/crunchyroll.js`
+3. Run in *Terminal*: `sudo npm install -g crunchy`
 
 ### Mac OS X
 
 1. Install *Homebrew* following the instructions at http://brew.sh/
 2. Run in *Terminal*: `brew install node mkvtoolnix rtmpdump ffmpeg`
-3. Run in *Terminal*: `npm install -g godzil/crunchyroll.js`
+3. Run in *Terminal*: `npm install -g crunchy`
 
 ### Windows
 
 1. Install *NodeJS* following the instructions at http://nodejs.org/
-3. Run in *Command Prompt*: `npm install -g godzil/crunchyroll.js`
+3. Run in *Command Prompt*: `npm install -g crunchy`
 
 ## Instructions
 
