@@ -11,7 +11,7 @@
     "type": "git",
     "url": "git://github.com/Godzil/crunchyroll.js.git"
   },
-  "version": "1.1.6",
+  "version": "1.1.7",
   "bin": {
     "crunchy": "./bin/crunchy"
   },
@@ -30,7 +30,7 @@
   },
   "scripts": {
     "prepublish": "npm run tsd && tsc",
-    "test":  "node ts --only-test",
+    "test": "node ts --only-test",
     "tsd": "tsd reinstall -o -s"
   }
 }
