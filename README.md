@@ -1,3 +1,7 @@
+# DECREPATED
+
+See https://github.com/Deathspike/animekaizoku instead.
+
 # CrunchyRoll.js
 
 *CrunchyRoll.js* is capable of downloading *anime* episodes from the popular *CrunchyRoll* streaming service. An episode is stored in the original video format (often H.264 in a MP4 container) and the configured subtitle format (ASS or SRT).The two output files are then merged into a single MKV file.
