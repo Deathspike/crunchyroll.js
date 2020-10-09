@@ -1,6 +1,6 @@
 # DECREPATED
 
-See https://github.com/Deathspike/animekaizoku instead.
+See https://github.com/Deathspike/animesync instead.
 
 # CrunchyRoll.js
 
