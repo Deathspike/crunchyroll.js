@@ -86,7 +86,7 @@ function page(config: IConfig, address: string, done: (err: Error, result?: ISer
       if (!address || !episode) return;
       episodes.push({
         address: address,
-        episode: parseInt(episode[0], 10),
+        episode: parseInt(episode[1], 10),
         volume: volume ? parseInt(volume[0], 10) : 1
       });
     });
